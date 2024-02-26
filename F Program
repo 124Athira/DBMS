@@ -1,0 +1,119 @@
+ mysql> CREATE TABLE Emp (
+    ->     EmpNo INT PRIMARY KEY,
+    ->     EmpName VARCHAR(50),
+    ->     Job VARCHAR(50),
+    ->     Basic DECIMAL(10, 2),
+    ->     DA DECIMAL(10, 2),
+    ->     HRA DECIMAL(10, 2),
+    ->     PF DECIMAL(10, 2),
+    ->     GrossPay DECIMAL(10, 2),
+    ->     NetPay DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> INSERT INTO Emp (EmpNo, EmpName, Job, Basic, DA, HRA, PF, GrossPay, NetPay)
+    -> VALUES
+    -> (1, 'John Doe', 'Manager', 50000.00, 15000.00, 20000.00, 5000.00, 0.00, 0.00),
+    -> (2, 'Jane Smith', 'Developer', 40000.00, 12000.00, 16000.00, 4000.00, 0.00, 0.00),
+    -> (3, 'Bob Johnson', 'Analyst', 45000.00, 13500.00, 18000.00, 4500.00, 0.00, 0.00),
+    -> (4, 'Alice Brown', 'Designer', 35000.00, 10500.00, 14000.00, 3500.00, 0.00, 0.00),
+    -> (5, 'Charlie White', 'Tester', 30000.00, 9000.00, 12000.00, 3000.00, 0.00, 0.00);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from Emp;
++-------+---------------+-----------+----------+----------+----------+---------+----------+--------+
+| EmpNo | EmpName       | Job       | Basic    | DA       | HRA      | PF      | GrossPay | NetPay |
++-------+---------------+-----------+----------+----------+----------+---------+----------+--------+
+|     1 | John Doe      | Manager   | 50000.00 | 15000.00 | 20000.00 | 5000.00 |     0.00 |   0.00 |
+|     2 | Jane Smith    | Developer | 40000.00 | 12000.00 | 16000.00 | 4000.00 |     0.00 |   0.00 |
+|     3 | Bob Johnson   | Analyst   | 45000.00 | 13500.00 | 18000.00 | 4500.00 |     0.00 |   0.00 |
+|     4 | Alice Brown   | Designer  | 35000.00 | 10500.00 | 14000.00 | 3500.00 |     0.00 |   0.00 |
+|     5 | Charlie White | Tester    | 30000.00 |  9000.00 | 12000.00 | 3000.00 |     0.00 |   0.00 |
++-------+---------------+-----------+----------+----------+----------+---------+----------+--------+
+5 rows in set (0.01 sec)
+
+2. mysql> UPDATE Emp
+    -> SET
+    ->     DA = Basic * 0.30,
+    ->     HRA = Basic * 0.40,
+    ->     GrossPay = Basic + DA + HRA,
+    ->     NetPay = Basic + DA + HRA - PF;
+Query OK, 5 rows affected (0.05 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from Emp;
++-------+---------------+-----------+----------+----------+----------+---------+----------+----------+
+| EmpNo | EmpName       | Job       | Basic    | DA       | HRA      | PF      | GrossPay | NetPay   |
++-------+---------------+-----------+----------+----------+----------+---------+----------+----------+
+|     1 | John Doe      | Manager   | 50000.00 | 15000.00 | 20000.00 | 5000.00 | 85000.00 | 80000.00 |
+|     2 | Jane Smith    | Developer | 40000.00 | 12000.00 | 16000.00 | 4000.00 | 68000.00 | 64000.00 |
+|     3 | Bob Johnson   | Analyst   | 45000.00 | 13500.00 | 18000.00 | 4500.00 | 76500.00 | 72000.00 |
+|     4 | Alice Brown   | Designer  | 35000.00 | 10500.00 | 14000.00 | 3500.00 | 59500.00 | 56000.00 |
+|     5 | Charlie White | Tester    | 30000.00 |  9000.00 | 12000.00 | 3000.00 | 51000.00 | 48000.00 |
++-------+---------------+-----------+----------+----------+----------+---------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT EmpNo, EmpName, Job, Basic
+    -> FROM (
+    ->     SELECT EmpNo, EmpName, Job, Basic,
+    ->            ROW_NUMBER() OVER (PARTITION BY Job ORDER BY Basic ASC) AS RowNum
+    ->     FROM Emp
+    -> ) Ranked
+    -> WHERE RowNum = 1;
++-------+---------------+-----------+----------+
+| EmpNo | EmpName       | Job       | Basic    |
++-------+---------------+-----------+----------+
+|     3 | Bob Johnson   | Analyst   | 45000.00 |
+|     4 | Alice Brown   | Designer  | 35000.00 |
+|     2 | Jane Smith    | Developer | 40000.00 |
+|     1 | John Doe      | Manager   | 50000.00 |
+|     5 | Charlie White | Tester    | 30000.00 |
++-------+---------------+-----------+----------+
+5 rows in set (0.02 sec)
+
+
+3. mysql> UPDATE Emp
+    -> SET NetPay = NetPay + 1200
+    -> WHERE NetPay < 10000.00;
+Query OK, 0 rows affected (0.02 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from Emp;
++-------+---------------+-----------+----------+----------+----------+---------+----------+----------+
+| EmpNo | EmpName       | Job       | Basic    | DA       | HRA      | PF      | GrossPay | NetPay   |
++-------+---------------+-----------+----------+----------+----------+---------+----------+----------+
+|     1 | John Doe      | Manager   | 50000.00 | 15000.00 | 20000.00 | 5000.00 | 85000.00 | 80000.00 |
+|     2 | Jane Smith    | Developer | 40000.00 | 12000.00 | 16000.00 | 4000.00 | 68000.00 | 64000.00 |
+|     3 | Bob Johnson   | Analyst   | 45000.00 | 13500.00 | 18000.00 | 4500.00 | 76500.00 | 72000.00 |
+|     4 | Alice Brown   | Designer  | 35000.00 | 10500.00 | 14000.00 | 3500.00 | 59500.00 | 56000.00 |
+|     5 | Charlie White | Tester    | 30000.00 |  9000.00 | 12000.00 | 3000.00 | 51000.00 | 48000.00 |
++-------+---------------+-----------+----------+----------+----------+---------+----------+----------+
+5 rows in set (0.04 sec)
+
+4. mysql> SELECT EmpNo, EmpName, GrossPay
+    -> FROM Emp
+    -> WHERE GrossPay BETWEEN 10000.00 AND 20000.00;
+Empty set (0.04 sec)
+
+  mysql> SELECT EmpNo, EmpName, GrossPay  FROM Emp  WHERE GrossPay BETWEEN 10000.00 AND 100000.00;
++-------+---------------+----------+
+| EmpNo | EmpName       | GrossPay |
++-------+---------------+----------+
+|     1 | John Doe      | 85000.00 |
+|     2 | Jane Smith    | 68000.00 |
+|     3 | Bob Johnson   | 76500.00 |
+|     4 | Alice Brown   | 59500.00 |
+|     5 | Charlie White | 51000.00 |
++-------+---------------+----------+
+5 rows in set (0.00 sec)
+
+5.  mysql> SELECT EmpNo, EmpName, Job, GrossPay
+    -> FROM Emp
+    -> WHERE GrossPay = (SELECT MAX(GrossPay) FROM Emp);
++-------+----------+---------+----------+
+| EmpNo | EmpName  | Job     | GrossPay |
++-------+----------+---------+----------+
+|     1 | John Doe | Manager | 85000.00 |
++-------+----------+---------+----------+
+1 row in set (0.03 sec)
