@@ -1,0 +1,72 @@
+mysql> SELECT e.ename
+    -> FROM Emp e
+    -> JOIN Emp m ON e.mgr = m.empno
+    -> WHERE e.sal > m.sal;
++----------------+
+| ename          |
++----------------+
+| Charlie Wilson |
++----------------+
+1 row in set (0.04 sec)
+
+2.  mysql> SELECT e.ename
+    -> FROM Emp e
+    -> WHERE (e.sal, e.deptno) IN (
+    ->     SELECT MAX(sal), deptno
+    ->     FROM Emp
+    ->     GROUP BY deptno
+    -> );
++----------------+
+| ename          |
++----------------+
+| Jane Smith     |
+| Bob Johnson    |
+| Alice Brown    |
+| Charlie Wilson |
++----------------+
+4 rows in set (0.05 sec)
+
+3.  mysql> select * from Emp;
++-------+----------------+-------------------+------+------------+----------+---------+--------+---------+
+| empno | ename          | job               | mgr  | hiredate   | sal      | comm    | deptno | loc     |
++-------+----------------+-------------------+------+------------+----------+---------+--------+---------+
+|     2 | Jane Smith     | Salesperson       |    1 | 2011-03-20 | 46000.00 | 2000.00 |      1 | london  |
+|     3 | Bob Johnson    | HR Specialist     |    1 | 2019-05-10 | 45000.00 |    NULL |      2 | london  |
+|     4 | Alice Brown    | IT Specialist     |    1 | 2022-02-05 | 55000.00 | 1000.00 |      4 | hongong |
+|     5 | Charlie Wilson | Financial Analyst |    3 | 2000-11-08 | 55200.00 | 1500.00 |      3 | india   |
++-------+----------------+-------------------+------+------------+----------+---------+--------+---------+
+4 rows in set (0.00 sec)
+mysql> SELECT e1.ename, e2.ename, e1.loc
+    -> FROM Emp e1
+    -> JOIN Emp e2 ON e1.loc = e2.loc AND e1.empno < e2.empno;
++------------+-------------+--------+
+| ename      | ename       | loc    |
++------------+-------------+--------+
+| Jane Smith | Bob Johnson | london |
++------------+-------------+--------+
+1 row in set (0.00 sec)
+
+4. mysql> SELECT e.ename
+    -> FROM Emp e
+    -> GROUP BY e.empno
+    -> HAVING SUM(e.sal) = (SELECT MIN(total_salary)
+    ->                     FROM (SELECT deptno, SUM(sal) as total_salary
+    ->                           FROM Emp
+    ->                           GROUP BY deptno) AS dept_totals);
++-------------+
+| ename       |
++-------------+
+| Bob Johnson |
++-------------+
+1 row in set (0.00 sec)
+
+5. mysql> SELECT d.dname
+    -> FROM Dept d
+    -> LEFT JOIN Emp e ON d.deptno = e.deptno
+    -> WHERE e.deptno IS NULL;
++-----------+
+| dname     |
++-----------+
+| Marketing |
++-----------+
+1 row in set (0.00 sec)
