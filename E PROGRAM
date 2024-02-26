@@ -1,0 +1,73 @@
+1. mysql> CREATE TABLE Purchase (
+    ->     purchaseNo INT PRIMARY KEY,
+    ->     salesman VARCHAR(50),
+    ->     salesmanid INT,
+    ->     item VARCHAR(50),
+    ->     amount DECIMAL(10, 2),
+    ->     branch VARCHAR(50),
+    ->     DOB DATE
+    -> );
+Query OK, 0 rows affected (0.14 sec)
+
+2. mysql> INSERT INTO Purchase VALUES
+    -> (1, 'John Doe', 101, 'Product A', 2500.00, 'Branch A', '1990-01-15'),
+    -> (2, 'Jane Smith', 102, 'Product B', 3500.00, 'Branch B', '1985-05-20'),
+    -> (3, 'Bob Johnson', 103, 'Product C', 4000.00, 'Branch A', '1988-09-10'),
+    -> (4, 'Alice Brown', 104, 'Product D', 2800.00, 'Branch C', '1992-03-25'),
+    -> (5, 'Charlie White', 105, 'Product E', 3200.00, 'Branch B', '1995-11-05'),
+    -> (6, 'Eva Black', 106, 'Product F', 4500.00, 'Branch C', '1990-07-12');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from purchase;
++------------+---------------+------------+-----------+---------+----------+------------+
+| purchaseNo | salesman      | salesmanid | item      | amount  | branch   | DOB        |
++------------+---------------+------------+-----------+---------+----------+------------+
+|          1 | John Doe      |        101 | Product A | 2500.00 | Branch A | 1990-01-15 |
+|          2 | Jane Smith    |        102 | Product B | 3500.00 | Branch B | 1985-05-20 |
+|          3 | Bob Johnson   |        103 | Product C | 4000.00 | Branch A | 1988-09-10 |
+|          4 | Alice Brown   |        104 | Product D | 2800.00 | Branch C | 1992-03-25 |
+|          5 | Charlie White |        105 | Product E | 3200.00 | Branch B | 1995-11-05 |
+|          6 | Eva Black     |        106 | Product F | 4500.00 | Branch C | 1990-07-12 |
++------------+---------------+------------+-----------+---------+----------+------------+
+6 rows in set (0.00 sec)
+
+3. mysql> SELECT
+    ->     branch,
+    ->     SUM(amount) AS totalAmount,
+    ->     AVG(amount) AS averageAmount
+    -> FROM Purchase
+    -> GROUP BY branch;
++----------+-------------+---------------+
+| branch   | totalAmount | averageAmount |
++----------+-------------+---------------+
+| Branch A |     6500.00 |   3250.000000 |
+| Branch B |     6700.00 |   3350.000000 |
+| Branch C |     7300.00 |   3650.000000 |
++----------+-------------+---------------+
+3 rows in set (0.01 sec)
+
+4. mysql> SELECT COUNT(*) AS numberOfSalesmen
+    -> FROM Purchase
+    -> WHERE amount < 3000.00;
++------------------+
+| numberOfSalesmen |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.01 sec)
+
+5. mysql> SELECT salesman
+    -> FROM Purchase
+    -> ORDER BY salesman;
++---------------+
+| salesman      |
++---------------+
+| Alice Brown   |
+| Bob Johnson   |
+| Charlie White |
+| Eva Black     |
+| Jane Smith    |
+| John Doe      |
++---------------+
+6 rows in set (0.04 sec)
