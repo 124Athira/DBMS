@@ -1,0 +1,116 @@
+1.mysql> create table Employee(Emp_no int primary key,E_name varchar(50) not null,salary decimal(10,2));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table department(Emp_no int primary key,dept_name varchar(50));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Employee (Emp_no, E_name, Salary) VALUES (201, 'John', 50000),(202, 'Alice', 60000),(203, 'Bob', 55000),(204, 'Charlie', 70000),(205, 'David', 10000);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employee;
++--------+---------+----------+
+| Emp_no | E_name  | salary   |
++--------+---------+----------+
+|    201 | John    | 50000.00 |
+|    202 | Alice   | 60000.00 |
+|    203 | Bob     | 55000.00 |
+|    204 | Charlie | 70000.00 |
+|    205 | David   | 10000.00 |
++--------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO department (Emp_no, Dept_name) VALUES (201, 'IT'),(202, 'HR'),(203, 'Finance'),(204, 'Marketing'),(205, 'Sales');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++--------+-----------+
+| Emp_no | dept_name |
++--------+-----------+
+|    201 | IT        |
+|    202 | HR        |
+|    203 | Finance   |
+|    204 | Marketing |
+|    205 | Sales     |
++--------+-----------+
+5 rows in set (0.00 sec)
+
+2.  UPDATE Employee SET E_name = 'UpdatedName' WHERE Emp_no = 202;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++--------+-------------+----------+
+| Emp_no | E_name      | salary   |
++--------+-------------+----------+
+|    201 | John        | 50000.00 |
+|    202 | UpdatedName | 60000.00 |
+|    203 | Bob         | 55000.00 |
+|    204 | Charlie     | 70000.00 |
+|    205 | David       | 10000.00 |
++--------+-------------+----------+
+5 rows in set (0.00 sec)
+
+3.  DELETE FROM department WHERE E_name = 'Raju';
+ERROR 1054 (42S22): Unknown column 'E_name' in 'where clause'
+
+5. mysql> SELECT E_name AS ename, Salary AS sal FROM Employee;
++-------------+----------+
+| ename       | sal      |
++-------------+----------+
+| John        | 50000.00 |
+| UpdatedName | 60000.00 |
+| Bob         | 55000.00 |
+| Charlie     | 70000.00 |
+| David       | 10000.00 |
++-------------+----------+
+5 rows in set (0.01 sec)
+
+6.mysql> INSERT INTO Employee (Emp_no, E_name, Salary) VALUES (206, NULL, 45000),(207, 'Eva', NULL),(208, 'John', 50000),(209, 'Alice', 60000);
+ERROR 1048 (23000): Column 'E_name' cannot be null
+mysql> select  * from Employee;
++--------+-------------+----------+
+| Emp_no | E_name      | salary   |
++--------+-------------+----------+
+|    201 | John        | 50000.00 |
+|    202 | UpdatedName | 60000.00 |
+|    203 | Bob         | 55000.00 |
+|    204 | Charlie     | 70000.00 |
+|    205 | David       | 10000.00 |
++--------+-------------+----------+
+5 rows in set (0.00 sec)
+
+7.mysql> SELECT E_name FROM Employee WHERE Emp_no = 204;
++---------+
+| E_name  |
++---------+
+| Charlie |
++---------+
+1 row in set (0.01 sec)
+
+8.mysql> SELECT E_name FROM Employee WHERE Salary = 10000;
++--------+
+| E_name |
++--------+
+| David  |
++--------+
+1 row in set (0.02 sec)
+
+9.mysql> UPDATE Employee SET Salary = 50000 WHERE Emp_no = 205;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Empoyee;
+ERROR 1146 (42S02): Table 'bibin.empoyee' doesn't exist
+mysql> select * from Employee;
++--------+-------------+----------+
+| Emp_no | E_name      | salary   |
++--------+-------------+----------+
+|    201 | John        | 50000.00 |
+|    202 | UpdatedName | 60000.00 |
+|    203 | Bob         | 55000.00 |
+|    204 | Charlie     | 70000.00 |
+|    205 | David       | 50000.00 |
++--------+-------------+----------+
+5 rows in set (0.00 sec)
