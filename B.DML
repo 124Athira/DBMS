@@ -1,116 +1,271 @@
-1.mysql> create table Employee(Emp_no int primary key,E_name varchar(50) not null,salary decimal(10,2));
+ use mca;
+Database changed
+mysql> create table employee(Emp_no int primary key,E_name varchar(255)not null,E_address varchar(255),E_phn varchar(15),Dept_name varchar(50),Job_id varchar(50),Salary int);
 Query OK, 0 rows affected (0.03 sec)
+ create table department(Dept_no int primary key,Emp_no int,Emp_name varchar(255),Foreign key(Emp_no)references employee(Emp_no));
+Query OK, 0 rows affected (0.08 sec)
 
-mysql> create table department(Emp_no int primary key,dept_name varchar(50));
-Query OK, 0 rows affected (0.03 sec)
+mysql> desc employee;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Emp_no    | int          | NO   | PRI | NULL    |       |
+| E_name    | varchar(255) | NO   |     | NULL    |       |
+| E_address | varchar(255) | YES  |     | NULL    |       |
+| E_phn     | varchar(15)  | YES  |     | NULL    |       |
+| Dept_name | varchar(50)  | YES  |     | NULL    |       |
+| Job_id    | varchar(50)  | YES  |     | NULL    |       |
+| Salary    | int          | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
 
-mysql> INSERT INTO Employee (Emp_no, E_name, Salary) VALUES (201, 'John', 50000),(202, 'Alice', 60000),(203, 'Bob', 55000),(204, 'Charlie', 70000),(205, 'David', 10000);
-Query OK, 5 rows affected (0.01 sec)
-Records: 5  Duplicates: 0  Warnings: 0
+mysql> desc department;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| Dept_no  | int          | NO   | PRI | NULL    |       |
+| Emp_no   | int          | YES  | MUL | NULL    |       |
+| Emp_name | varchar(255) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
 
-mysql> select * from Employee;
-+--------+---------+----------+
-| Emp_no | E_name  | salary   |
-+--------+---------+----------+
-|    201 | John    | 50000.00 |
-|    202 | Alice   | 60000.00 |
-|    203 | Bob     | 55000.00 |
-|    204 | Charlie | 70000.00 |
-|    205 | David   | 10000.00 |
-+--------+---------+----------+
+mysql>  insert into employee values(201, 'Alice', '123 Park St', '555-1111', 'HR', '301', 55000);
+Query OK, 1 row affected (0.01 sec)
+insert into employee values(202, 'Bob', '456 Pine St', '555-2222', 'IT', '302', 60000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(203, 'Charlie', '789 Elm St', '555-3333', 'Finance', '303', 65000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into employee values(204, 'David', '101 Oak St', '555-4444', 'Marketing', '304', 70000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee values(205, 'Eve', '202 Maple St', '555-5555', 'HR', '305', 75000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(301, 201, 'HR');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(302, 202, 'IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(303, 203, 'Finance');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(304, 204, 'Marketing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into department values(305, 205, 'HR');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from employee;
++--------+---------+--------------+----------+-----------+--------+--------+
+| Emp_no | E_name  | E_address    | E_phn    | Dept_name | Job_id | Salary |
++--------+---------+--------------+----------+-----------+--------+--------+
+|    201 | Alice   | 123 Park St  | 555-1111 | HR        | 301    |  55000 |
+|    202 | Bob     | 456 Pine St  | 555-2222 | IT        | 302    |  60000 |
+|    203 | Charlie | 789 Elm St   | 555-3333 | Finance   | 303    |  65000 |
+|    204 | David   | 101 Oak St   | 555-4444 | Marketing | 304    |  70000 |
+|    205 | Eve     | 202 Maple St | 555-5555 | HR        | 305    |  75000 |
++--------+---------+--------------+----------+-----------+--------+--------+
 5 rows in set (0.00 sec)
-
-mysql> INSERT INTO department (Emp_no, Dept_name) VALUES (201, 'IT'),(202, 'HR'),(203, 'Finance'),(204, 'Marketing'),(205, 'Sales');
-Query OK, 5 rows affected (0.02 sec)
-Records: 5  Duplicates: 0  Warnings: 0
-
-mysql> select * from department;
-+--------+-----------+
-| Emp_no | dept_name |
-+--------+-----------+
-|    201 | IT        |
-|    202 | HR        |
-|    203 | Finance   |
-|    204 | Marketing |
-|    205 | Sales     |
-+--------+-----------+
+select *from department;
++---------+--------+-----------+
+| Dept_no | Emp_no | Dept_name |
++---------+--------+-----------+
+|     301 |    201 | HR        |
+|     302 |    202 | IT        |
+|     303 |    203 | Finance   |
+|     304 |    204 | Marketing |
+|     305 |    205 | HR        |
++---------+--------+-----------+
 5 rows in set (0.00 sec)
+delete from department where Dept_name='Finance';
+Query OK, 1 row affected (0.00 sec)
 
-2.  UPDATE Employee SET E_name = 'UpdatedName' WHERE Emp_no = 202;
-Query OK, 1 row affected (0.03 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-
-mysql> select * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 10000.00 |
-+--------+-------------+----------+
+mysql> select *from department;
++---------+--------+-----------+
+| Dept_no | Emp_no | Dept_name |
++---------+--------+-----------+
+|     301 |    201 | HR        |
+|     302 |    202 | IT        |
+|     304 |    204 | Marketing |
+|     305 |    205 | HR        |
++---------+--------+-----------+
+4 rows in set (0.00 sec)
+ select Emp_no,Salary from employee;
++--------+--------+
+| Emp_no | Salary |
++--------+--------+
+|    201 |  55000 |
+|    202 |  60000 |
+|    203 |  65000 |
+|    204 |  70000 |
+|    205 |  75000 |
++--------+--------+
 5 rows in set (0.00 sec)
-
-3.  DELETE FROM department WHERE E_name = 'Raju';
-ERROR 1054 (42S22): Unknown column 'E_name' in 'where clause'
-
-5. mysql> SELECT E_name AS ename, Salary AS sal FROM Employee;
-+-------------+----------+
-| ename       | sal      |
-+-------------+----------+
-| John        | 50000.00 |
-| UpdatedName | 60000.00 |
-| Bob         | 55000.00 |
-| Charlie     | 70000.00 |
-| David       | 10000.00 |
-+-------------+----------+
-5 rows in set (0.01 sec)
-
-6.mysql> INSERT INTO Employee (Emp_no, E_name, Salary) VALUES (206, NULL, 45000),(207, 'Eva', NULL),(208, 'John', 50000),(209, 'Alice', 60000);
+ select E_name as ename,Salary as sal from employee;
++---------+-------+
+| ename   | sal   |
++---------+-------+
+| Alice   | 55000 |
+| Bobby   | 60000 |
+| Charlie | 65000 |
+| David   | 70000 |
+| Eve     | 75000 |
++---------+-------+
+5 rows in set (0.00 sec)
+ insert into employee values(206, NULL, '456 Null St', NULL, 'IT', 306, NULL);
 ERROR 1048 (23000): Column 'E_name' cannot be null
-mysql> select  * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 10000.00 |
-+--------+-------------+----------+
-5 rows in set (0.00 sec)
+mysql> insert into employee values(207, 'Alice', '789 Repeat St', '555-7777', 'HR', 307, 10000);
+Query OK, 1 row affected (0.00 sec)
 
-7.mysql> SELECT E_name FROM Employee WHERE Emp_no = 204;
-+---------+
-| E_name  |
-+---------+
-| Charlie |
-+---------+
-1 row in set (0.01 sec)
-
-8.mysql> SELECT E_name FROM Employee WHERE Salary = 10000;
+mysql> select *from employee;
++--------+---------+---------------+----------+-----------+--------+--------+
+| Emp_no | E_name  | E_address     | E_phn    | Dept_name | Job_id | Salary |
++--------+---------+---------------+----------+-----------+--------+--------+
+|    201 | Alice   | 123 Park St   | 555-1111 | HR        | 301    |  55000 |
+|    202 | Bobby   | 456 Pine St   | 555-2222 | IT        | 302    |  60000 |
+|    203 | Charlie | 789 Elm St    | 555-3333 | Finance   | 303    |  65000 |
+|    204 | David   | 101 Oak St    | 555-4444 | Marketing | 304    |  70000 |
+|    205 | Eve     | 202 Maple St  | 555-5555 | HR        | 305    |  75000 |
+|    207 | Alice   | 789 Repeat St | 555-7777 | HR        | 307    |  10000 |
++--------+---------+---------------+----------+-----------+--------+--------+
+6 rows in set (0.00 sec)
+ select E_name from employee where Emp_no=204;
 +--------+
 | E_name |
 +--------+
 | David  |
 +--------+
-1 row in set (0.02 sec)
-
-9.mysql> UPDATE Employee SET Salary = 50000 WHERE Emp_no = 205;
-Query OK, 1 row affected (0.03 sec)
+1 row in set (0.00 sec)
+ select E_name from employee where Salary=10000;
++--------+
+| E_name |
++--------+
+| Alice  |
++--------+
+1 row in set (0.00 sec)
+ update employee set Salary=50000 where Emp_no=205;
+Query OK, 1 row affected (0.00 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> select * from Empoyee;
-ERROR 1146 (42S02): Table 'bibin.empoyee' doesn't exist
-mysql> select * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 50000.00 |
-+--------+-------------+----------+
-5 rows in set (0.00 sec)
+mysql> select *from employee;
++--------+---------+---------------+----------+-----------+--------+--------+
+| Emp_no | E_name  | E_address     | E_phn    | Dept_name | Job_id | Salary |
++--------+---------+---------------+----------+-----------+--------+--------+
+|    201 | Alice   | 123 Park St   | 555-1111 | HR        | 301    |  55000 |
+|    202 | Bobby   | 456 Pine St   | 555-2222 | IT        | 302    |  60000 |
+|    203 | Charlie | 789 Elm St    | 555-3333 | Finance   | 303    |  65000 |
+|    204 | David   | 101 Oak St    | 555-4444 | Marketing | 304    |  70000 |
+|    205 | Eve     | 202 Maple St  | 555-5555 | HR        | 305    |  50000 |
+|    207 | Alice   | 789 Repeat St | 555-7777 | HR        | 307    |  10000 |
++--------+---------+---------------+----------+-----------+--------+--------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
