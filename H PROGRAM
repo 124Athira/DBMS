@@ -1,72 +1,135 @@
-mysql> SELECT e.ename
-    -> FROM Emp e
-    -> JOIN Emp m ON e.mgr = m.empno
-    -> WHERE e.sal > m.sal;
-+----------------+
-| ename          |
-+----------------+
-| Charlie Wilson |
-+----------------+
-1 row in set (0.04 sec)
+mysql> use mca;
+Database changed
+mysql> create table Departments(D_id int primary key,D_name varchar(50) not null,loc varchar(50) not null);
+Query OK, 0 rows affected (0.09 sec)
+create table Employees(E_id int primary key,E_name varchar(50) not null,Salary int not null,Manager_id int,D_id int);
+Query OK, 0 rows affected (0.02 sec)
+mysql> desc Departments;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| D_id   | int         | NO   | PRI | NULL    |       |
+| D_name | varchar(50) | NO   |     | NULL    |       |
+| loc    | varchar(50) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+mysql> desc Employees;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| E_id       | int         | NO   | PRI | NULL    |       |
+| E_name     | varchar(50) | NO   |     | NULL    |       |
+| Salary     | int         | NO   |     | NULL    |       |
+| Manager_id | int         | YES  |     | NULL    |       |
+| D_id       | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
 
-2.  mysql> SELECT e.ename
-    -> FROM Emp e
-    -> WHERE (e.sal, e.deptno) IN (
-    ->     SELECT MAX(sal), deptno
-    ->     FROM Emp
-    ->     GROUP BY deptno
-    -> );
-+----------------+
-| ename          |
-+----------------+
-| Jane Smith     |
-| Bob Johnson    |
-| Alice Brown    |
-| Charlie Wilson |
-+----------------+
-4 rows in set (0.05 sec)
+mysql> insert into Departments values(1,'HR','NewYork');
+Query OK, 1 row affected (0.01 sec)
 
-3.  mysql> select * from Emp;
-+-------+----------------+-------------------+------+------------+----------+---------+--------+---------+
-| empno | ename          | job               | mgr  | hiredate   | sal      | comm    | deptno | loc     |
-+-------+----------------+-------------------+------+------------+----------+---------+--------+---------+
-|     2 | Jane Smith     | Salesperson       |    1 | 2011-03-20 | 46000.00 | 2000.00 |      1 | london  |
-|     3 | Bob Johnson    | HR Specialist     |    1 | 2019-05-10 | 45000.00 |    NULL |      2 | london  |
-|     4 | Alice Brown    | IT Specialist     |    1 | 2022-02-05 | 55000.00 | 1000.00 |      4 | hongong |
-|     5 | Charlie Wilson | Financial Analyst |    3 | 2000-11-08 | 55200.00 | 1500.00 |      3 | india   |
-+-------+----------------+-------------------+------+------------+----------+---------+--------+---------+
-4 rows in set (0.00 sec)
-mysql> SELECT e1.ename, e2.ename, e1.loc
-    -> FROM Emp e1
-    -> JOIN Emp e2 ON e1.loc = e2.loc AND e1.empno < e2.empno;
-+------------+-------------+--------+
-| ename      | ename       | loc    |
-+------------+-------------+--------+
-| Jane Smith | Bob Johnson | london |
-+------------+-------------+--------+
-1 row in set (0.00 sec)
+mysql> insert into Departments values(2,'IT','San Fransico');
+Query OK, 1 row affected (0.00 sec)
 
-4. mysql> SELECT e.ename
-    -> FROM Emp e
-    -> GROUP BY e.empno
-    -> HAVING SUM(e.sal) = (SELECT MIN(total_salary)
-    ->                     FROM (SELECT deptno, SUM(sal) as total_salary
-    ->                           FROM Emp
-    ->                           GROUP BY deptno) AS dept_totals);
-+-------------+
-| ename       |
-+-------------+
-| Bob Johnson |
-+-------------+
-1 row in set (0.00 sec)
+mysql> insert into Departments values(3,'Finance','Chicago');
+Query OK, 1 row affected (0.00 sec)
 
-5. mysql> SELECT d.dname
-    -> FROM Dept d
-    -> LEFT JOIN Emp e ON d.deptno = e.deptno
-    -> WHERE e.deptno IS NULL;
-+-----------+
-| dname     |
-+-----------+
-| Marketing |
-+-----------+
-1 row in set (0.00 sec)
+mysql> insert into Departments values(4,'Marketing','Los Angeles');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Departments values(5,'Operations','Dallas');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employees values(1,'John',80000,null,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employees values(2,'Jane',90000,1,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employees values(3,'Bob',95000,1,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employees values(4,'Alice',110000,3,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employees values(5,'Charlie',75000,3,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from Departments;
++------+------------+--------------+
+| D_id | D_name     | location     |
++------+------------+--------------+
+|    1 | HR         | NewYork      |
+|    2 | IT         | San Fransico |
+|    3 | Finance    | Chicago      |
+|    4 | Marketing  | Los Angeles  |
+|    5 | Operations | Dallas       |
++------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from Employees;
++------+---------+--------+------------+------+
+| E_id | E_name  | Salary | Manager_id | D_id |
++------+---------+--------+------------+------+
+|    1 | John    |  80000 |       NULL |    1 |
+|    2 | Jane    |  90000 |          1 |    1 |
+|    3 | Bob     |  95000 |          1 |    2 |
+|    4 | Alice   | 110000 |          3 |    2 |
+|    5 | Charlie |  75000 |          3 |    3 |
++------+---------+--------+------------+------+
+5 rows in set (0.00 sec)
+mysql> select e1.E_name from Employees e1 join Employees e2 on e1.Manager_id=e2.E_id where e1.Salary>e2.Salary;
++--------+
+| E_name |
++--------+
+| Jane   |
+| Bob    |
+| Alice  |
++--------+
+3 rows in set (0.00 sec)
+mysql> select e.E_name from Employees e join(select D_id,max(Salary)as maxSalary from Employees group by D_id)e_max on e.D_id=e_max.D_id and e.Salary=e_
+max.MaxSalary;
++---------+
+| E_name  |
++---------+
+| Jane    |
+| Alice   |
+| Charlie |
++---------+
+3 rows in set (0.00 sec)
+ select e.E_name from Employees e join(select D_id,min(Salary) as
+MinSalary from Employees group by D_id)e_min on e.D_id=e_min.D_id and e.
+Salary=e_min.MinSalary;
++---------+
+| E_name  |
++---------+
+| John    |
+| Bob     |
+| Charlie |
++---------+
+3 rows in set (0.01 sec)
+mysql> select D_name from Departments d left join Employees e on d.D_id=e.D_id where e.E_id is null;
++------------+
+| D_name     |
++------------+
+| Marketing  |
+| Operations |
++------------+
+2 rows in set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
