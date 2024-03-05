@@ -105,7 +105,7 @@ mysql> select * from Emp;
 +------+---------------+
 1 row in set (0.07 sec)
 
-4. mysql> CREATE VIEW EmployeeManagerView AS
+4. mysql> CREATE VIEW EmployeeMView AS
     -> SELECT e.ename AS employee_name, m.ename AS manager_name
     -> FROM Emp e
     -> LEFT JOIN Emp m ON e.mgr = m.empno;
