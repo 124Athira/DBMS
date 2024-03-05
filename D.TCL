@@ -1,88 +1,41 @@
-1.     mysql> start TRANSACTION;
-Query OK, 0 rows affected (0.04 sec)
+mysql> use mca;
+Database changed
+mysql> begin;
+Query OK, 0 rows affected (0.00 sec)
+create table Employe(E_no int primary key,E_name varchar(50) not null,Job varchar(50)not null,Salary int,Dept_no int);
+Query OK, 0 rows affected (0.02 sec)
 
-mysql> INSERT INTO Employee VALUES (4, 'John Do', 50000),(5, 'Jane Smit', 60000),(6, 'Bo Johnson', 55000);
-Query OK, 3 rows affected (0.01 sec)
-Records: 3  Duplicates: 0  Warnings: 0
+mysql> insert into Employe values(1, 'John Doe', 'Manager', 80000, 1);
+Query OK, 1 row affected (0.01 sec)
 
-mysql> select * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|      1 | John Doe    | 50000.00 |
-|      2 | Jane Smith  | 60000.00 |
-|      3 | Bob Johnson | 55000.00 |
-|      4 | John Do     | 50000.00 |
-|      5 | Jane Smit   | 60000.00 |
-|      6 | Bo Johnson  | 55000.00 |
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 50000.00 |
-+--------+-------------+----------+
-11 rows in set (0.00 sec)
+mysql> insert into Employe values(2, 'Jane Smith', 'Analyst', 60000, 2);
+Query OK, 1 row affected (0.00 sec)
 
-mysql> ROLLBACK;
-Query OK, 0 rows affected (0.04 sec)
+mysql> insert into Employe values(3, 'Bob Johnson', 'Clerk', 40000, 1);
+Query OK, 1 row affected (0.00 sec)
 
-mysql> select * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|      1 | John Doe    | 50000.00 |
-|      2 | Jane Smith  | 60000.00 |
-|      3 | Bob Johnson | 55000.00 |
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 50000.00 |
-+--------+-------------+----------+
-8 rows in set (0.00 sec)
+mysql> select *from Employe;
++------+-------------+---------+--------+---------+
+| E_no | E_name      | Job     | Salary | Dept_no |
++------+-------------+---------+--------+---------+
+|    1 | John Doe    | Manager |  80000 |       1 |
+|    2 | Jane Smith  | Analyst |  60000 |       2 |
+|    3 | Bob Johnson | Clerk   |  40000 |       1 |
++------+-------------+---------+--------+---------+
+3 rows in set (0.00 sec)
 
-2.    mysql> start TRANSACTION;
+mysql> rolback;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rolback' at line 1
+mysql> rollback;
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> INSERT INTO Employee VALUES (4, 'John Do', 50000),(5, 'Jane Smit', 60000),(6, 'Bo Johnson', 55000);
-Query OK, 3 rows affected (0.00 sec)
-Records: 3  Duplicates: 0  Warnings: 0
-
-mysql> select * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|      1 | John Doe    | 50000.00 |
-|      2 | Jane Smith  | 60000.00 |
-|      3 | Bob Johnson | 55000.00 |
-|      4 | John Do     | 50000.00 |
-|      5 | Jane Smit   | 60000.00 |
-|      6 | Bo Johnson  | 55000.00 |
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 50000.00 |
-+--------+-------------+----------+
-11 rows in set (0.00 sec)
-
 mysql> commit;
-Query OK, 0 rows affected (0.01 sec)
+Query OK, 0 rows affected (0.00 sec)
 
-mysql> select * from Employee;
-+--------+-------------+----------+
-| Emp_no | E_name      | salary   |
-+--------+-------------+----------+
-|      1 | John Doe    | 50000.00 |
-|      2 | Jane Smith  | 60000.00 |
-|      3 | Bob Johnson | 55000.00 |
-|      4 | John Do     | 50000.00 |
-|      5 | Jane Smit   | 60000.00 |
-|      6 | Bo Johnson  | 55000.00 |
-|    201 | John        | 50000.00 |
-|    202 | UpdatedName | 60000.00 |
-|    203 | Bob         | 55000.00 |
-|    204 | Charlie     | 70000.00 |
-|    205 | David       | 50000.00 |
-+--------+-------------+----------+
-11 rows in set (0.00 sec)
+
+
+
+
+
+
+
