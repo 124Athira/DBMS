@@ -1,144 +1,139 @@
-mysql> create table Employee(Emp_no int primary key,E_name varchar(50) not null,salary decimal(10,2));
-Query OK, 0 rows affected (0.35 sec)
+mysql> use mca;
+Database changed
+mysql> create table Depmnt(Dept_no int primary key,Dept_name varchar(255),loc varchar(255));
+Query OK, 0 rows affected (0.04 sec)
+mysql> create table Emplye(E_no int primary key,E_name varchar(255),Salary int,Dept_no int);
+Query OK, 0 rows affected (0.03 sec)
 
-mysql> create table Department(Emp_no int primary key,dept_name varchar(50));
-Query OK, 0 rows affected (0.39 sec)
+mysql> insert into Depmnt values(1,'HR','Beijing');
+Query OK, 1 row affected (0.01 sec)
 
-mysql> insert into Employee (Emp_no, E_name, Salary) VALUES (201, 'John', 50000),(202, 'Alice', 60000),(203, 'Bob', 55000),(204, 'Charlie', 70000),(20
-5, 'David', 10000);
-Query OK, 5 rows affected (0.08 sec)
-Records: 5  Duplicates: 0  Warnings: 0
+mysql> insert into Depmnt values(2, 'Finance', 'Texas');
+Query OK, 1 row affected (0.01 sec)
 
-mysql> select*from Employee;
-+--------+---------+----------+
-| Emp_no | E_name  | salary   |
-+--------+---------+----------+
-|    201 | John    | 50000.00 |
-|    202 | Alice   | 60000.00 |
-|    203 | Bob     | 55000.00 |
-|    204 | Charlie | 70000.00 |
-|    205 | David   | 10000.00 |
-+--------+---------+----------+
+mysql> insert into Depmnt values(3, 'IT', 'London');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emplye values(101, 'Keerthi', 60000, 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emplye values(102, 'Alice', 50000, 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emplye values(103, 'Ziyaan', 70000, 2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emplye values(104, 'Devika', 55000, 3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emplye values(105, 'Emma', 60000, 2);
+Query OK, 1 row affected (0.01 sec)
+mysql> desc Depmnt;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Dept_no   | int          | NO   | PRI | NULL    |       |
+| Dept_name | varchar(255) | YES  |     | NULL    |       |
+| loc       | varchar(255) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc Emplye;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| E_no    | int          | NO   | PRI | NULL    |       |
+| E_name  | varchar(255) | YES  |     | NULL    |       |
+| Salary  | int          | YES  |     | NULL    |       |
+| Dept_no | int          | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select *from Depmnt;
++---------+-----------+---------+
+| Dept_no | Dept_name | loc     |
++---------+-----------+---------+
+|       1 | HR        | Beijing |
+|       2 | Finance   | Texas   |
+|       3 | IT        | London  |
++---------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select *from Emplye;
++------+---------+--------+---------+
+| E_no | E_name  | Salary | Dept_no |
++------+---------+--------+---------+
+|  101 | Keerthi |  60000 |       1 |
+|  102 | Alice   |  50000 |       1 |
+|  103 | Ziyaan  |  70000 |       2 |
+|  104 | Devika  |  55000 |       3 |
+|  105 | Emma    |  60000 |       2 |
++------+---------+--------+---------+
 5 rows in set (0.00 sec)
 
-mysql> INSERT INTO department (Emp_no, Dept_name) VALUES (201, 'IT'),(202, 'HR'),(203, 'Finance'),(204, 'Marketing'),(205, 'Sales');
-ERROR 1054 (42S22): Unknown column 'Emp_no' in 'field list'
-mysql> INSERT INTO Department (Emp_no, Dept_name) VALUES (201, 'IT'),(202, 'HR'),(203, 'Finance'),(204, 'Marketing'),(205, 'Sales');
-Query OK, 5 rows affected (0.07 sec)
-Records: 5  Duplicates: 0  Warnings: 0
+mysql> select E.*,D.* from Emplye E join Depmnt D on E.Dept_no=D.D
+ept_no;
++------+---------+--------+---------+---------+-----------+---------+
+| E_no | E_name  | Salary | Dept_no | Dept_no | Dept_name | loc     |
++------+---------+--------+---------+---------+-----------+---------+
+|  101 | Keerthi |  60000 |       1 |       1 | HR        | Beijing |
+|  102 | Alice   |  50000 |       1 |       1 | HR        | Beijing |
+|  103 | Ziyaan  |  70000 |       2 |       2 | Finance   | Texas   |
+|  104 | Devika  |  55000 |       3 |       3 | IT        | London  |
+|  105 | Emma    |  60000 |       2 |       2 | Finance   | Texas   |
++------+---------+--------+---------+---------+-----------+---------+
+5 rows in set (0.01 sec)
 
-mysql> select*from Department;
-+--------+-----------+
-| Emp_no | dept_name |
-+--------+-----------+
-|    201 | IT        |
-|    202 | HR        |
-|    203 | Finance   |
-|    204 | Marketing |
-|    205 | Sales     |
-+--------+-----------+
+mysql> select E.E_name,D.Dept_name from Emplye E left join Depmnt D on E.Dept_no=D.Dept_no;
++---------+-----------+
+| E_name  | Dept_name |
++---------+-----------+
+| Keerthi | HR        |
+| Alice   | HR        |
+| Ziyaan  | Finance   |
+| Devika  | IT        |
+| Emma    | Finance   |
++---------+-----------+
+5 rows in set (0.01 sec)
+
+mysql> select E.E_name,D.Dept_name from Emplye E right join Depmnt
+ D on E.Dept_no=D.Dept_no;
++---------+-----------+
+| E_name  | Dept_name |
++---------+-----------+
+| Alice   | HR        |
+| Keerthi | HR        |
+| Emma    | Finance   |
+| Ziyaan  | Finance   |
+| Devika  | IT        |
++---------+-----------+
 5 rows in set (0.00 sec)
 
-mysql> select Employee.*,Department.dept_name from Employee inner join Department on Employee.dept_name=Department.dept_name;
-ERROR 1054 (42S22): Unknown column 'Employee.dept_name' in 'on clause'
-mysql> alter table Employee add dept_name varchar(30);
-Query OK, 0 rows affected (0.29 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql> select E.* from Emplye E where E.Salary>(select avg(Salary)
+from Emplye);
++------+---------+--------+---------+
+| E_no | E_name  | Salary | Dept_no |
++------+---------+--------+---------+
+|  101 | Keerthi |  60000 |       1 |
+|  103 | Ziyaan  |  70000 |       2 |
+|  105 | Emma    |  60000 |       2 |
++------+---------+--------+---------+
+3 rows in set (0.01 sec)
 
-mysql> select*from Employee;
-+--------+---------+----------+-----------+
-| Emp_no | E_name  | salary   | dept_name |
-+--------+---------+----------+-----------+
-|    201 | John    | 50000.00 | NULL      |
-|    202 | Alice   | 60000.00 | NULL      |
-|    203 | Bob     | 55000.00 | NULL      |
-|    204 | Charlie | 70000.00 | NULL      |
-|    205 | David   | 10000.00 | NULL      |
-+--------+---------+----------+-----------+
-5 rows in set (0.00 sec)
 
-mysql> update Employee set dept_name='HR' where Emp_no=201;
-Query OK, 1 row affected (0.09 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-mysql> select*from Employee;
-+--------+---------+----------+-----------+
-| Emp_no | E_name  | salary   | dept_name |
-+--------+---------+----------+-----------+
-|    201 | John    | 50000.00 | HR        |
-|    202 | Alice   | 60000.00 | NULL      |
-|    203 | Bob     | 55000.00 | NULL      |
-|    204 | Charlie | 70000.00 | NULL      |
-|    205 | David   | 10000.00 | NULL      |
-+--------+---------+----------+-----------+
-5 rows in set (0.00 sec)
 
-mysql> update Employee set dept_name='Finance' where Emp_no=202;
-Query OK, 1 row affected (0.06 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> update Employee set dept_name='sales' where Emp_no=203;
-Query OK, 1 row affected (0.07 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> update Employee set dept_name='purchase' where Emp_no=204;
-Query OK, 1 row affected (0.09 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> update Employee set dept_name='Marketing' where Emp_no=205;
-Query OK, 1 row affected (0.09 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> select*from Employee;
-+--------+---------+----------+-----------+
-| Emp_no | E_name  | salary   | dept_name |
-+--------+---------+----------+-----------+
-|    201 | John    | 50000.00 | HR        |
-|    202 | Alice   | 60000.00 | Finance   |
-|    203 | Bob     | 55000.00 | sales     |
-|    204 | Charlie | 70000.00 | purchase  |
-|    205 | David   | 10000.00 | Marketing |
-+--------+---------+----------+-----------+
-5 rows in set (0.00 sec)
-mysql> select * from Employee inner join Department on Employee.dept_name=Department.dept_name;
-+--------+--------+----------+-----------+--------+-----------+
-| Emp_no | E_name | salary   | dept_name | Emp_no | dept_name |
-+--------+--------+----------+-----------+--------+-----------+
-|    201 | John   | 50000.00 | HR        |    202 | HR        |
-|    202 | Alice  | 60000.00 | Finance   |    203 | Finance   |
-|    205 | David  | 10000.00 | Marketing |    204 | Marketing |
-|    203 | Bob    | 55000.00 | sales     |    205 | Sales     |
-+--------+--------+----------+-----------+--------+-----------+
-4 rows in set (0.00 sec)
-mysql> select * from Employee left join Department on Employee.dept_name=Department.dept_name;
-+--------+---------+----------+-----------+--------+-----------+
-| Emp_no | E_name  | salary   | dept_name | Emp_no | dept_name |
-+--------+---------+----------+-----------+--------+-----------+
-|    201 | John    | 50000.00 | HR        |    202 | HR        |
-|    202 | Alice   | 60000.00 | Finance   |    203 | Finance   |
-|    203 | Bob     | 55000.00 | sales     |    205 | Sales     |
-|    204 | Charlie | 70000.00 | purchase  |   NULL | NULL      |
-|    205 | David   | 10000.00 | Marketing |    204 | Marketing |
-+--------+---------+----------+-----------+--------+-----------+
-5 rows in set (0.00 sec)
-mysql> select * from Employee right join Department on Employee.dept_name=Department.dept_name;
-+--------+--------+----------+-----------+--------+-----------+
-| Emp_no | E_name | salary   | dept_name | Emp_no | dept_name |
-+--------+--------+----------+-----------+--------+-----------+
-|   NULL | NULL   |     NULL | NULL      |    201 | IT        |
-|    201 | John   | 50000.00 | HR        |    202 | HR        |
-|    202 | Alice  | 60000.00 | Finance   |    203 | Finance   |
-|    205 | David  | 10000.00 | Marketing |    204 | Marketing |
-|    203 | Bob    | 55000.00 | sales     |    205 | Sales     |
-+--------+--------+----------+-----------+--------+-----------+
-5 rows in set (0.00 sec)
 
-mysql> select*from Employee where salary>(select avg(salary)from Employee);
-+--------+---------+----------+-----------+
-| Emp_no | E_name  | salary   | dept_name |
-+--------+---------+----------+-----------+
-|    201 | John    | 50000.00 | HR        |
-|    202 | Alice   | 60000.00 | Finance   |
-|    203 | Bob     | 55000.00 | sales     |
-|    204 | Charlie | 70000.00 | purchase  |
-+--------+---------+----------+-----------+
-4 rows in set (0.02 sec)
+
+
+
+
+
+
+
+
+
+
