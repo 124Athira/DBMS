@@ -62,6 +62,356 @@ Salary:30000
 
 PL/SQL procedure successfully completed.
 
+SQL> set serveroutput on;
+SQL> declare
+  2  n number;
+  3  fac number:=1;
+  4  i number;
+  5  begin
+  6  n:=&n;
+  7  for i in 1..n
+  8  loop
+  9  fac:=fac*i;
+ 10  end loop;
+ 11  dbms_output.put_line('factorial='||fac);
+ 12  end;
+ 13  /
+Enter value for n: 5
+old   6: n:=&n;
+new   6: n:=5;
+factorial=120
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  x number(5);
+  3  y number(5);
+  4  z number(7);
+  5  begin
+  6  x:=10;
+  7  y:=20;
+  8  z:=x+y;
+  9  dbms_output.put_line('Sum is'||z);
+ 10  end;
+ 11  /
+Sum is30
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  var1 integer;
+  3  var2 integer;
+  4  var3 integer;
+  5  begin
+  6  var1:=&var1;
+  7  var2:=&var2;
+  8  var3:=var1+var2;
+  9  Dbms_output.put_line(var3);
+ 10  End;
+ 11  /
+Enter value for var1: 5
+old   6: var1:=&var1;
+new   6: var1:=5;
+Enter value for var2: 6
+old   7: var2:=&var2;
+new   7: var2:=6;
+11
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2  dbms_output.put_line('This is my first PL/SQL Program');
+  3  dbms_output.put_line('PL/SQL is a procedural language');
+  4  dbms_output.put_line('I like PL/SQL');
+  5  end;
+  6  /
+This is my first PL/SQL Program
+PL/SQL is a procedural language
+I like PL/SQL
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  num1 number;
+  3  num2 number;
+  4  num3 number;
+  5  begin
+  6  num1:=20;
+  7  num2:=15;
+  8  num3:=num1+num2;
+  9  dbms_output.put_line('The sum of'||num1||'and'||num2||'is'||num3);
+ 10  num3:=num1-num2;
+ 11  dbms_output.put_line('The subtraction of'||num1||'and'||num2||'is'||num3);
+ 12  num3:=num1*num2;
+ 13  dbms_output.put_line('The multiplication of'||num1||'and'||num2||'is'||num3);
+ 14  num3:=num1/num2;
+ 15  dbms_output.put_line('The division of'||num1||'and'||num2||'is'||num3);
+ 16  end;
+ 17  /
+The sum of20and15is35
+The subtraction of20and15is5
+The multiplication of20and15is300
+The division of20and15is1.33333333333333333333333333333333333333
+
+PL/SQL procedure successfully completed.
+
+
+SQL> declare
+  2  num1 number;
+  3  num2 number;
+  4  num3 number;
+  5  begin
+  6  num1:=&num1;
+  7  num2:=&num2;
+  8  num3:=num1+num2;
+  9  dbms_output.put_line('The sum of'||num1||'and'||num2||'is'||num3);
+ 10  num3:=num1-num2;
+ 11  dbms_output.put_line('The subtraction of'||num1||'and'||num2||'is'||num3);
+ 12  num3:=num1*num2;
+ 13  dbms_output.put_line('The multiplication of'||num1||'and'||num2||'is'||num3);
+ 14  num3:=num1/num2;
+ 15  dbms_output.put_line('The division of'||num1||'and'||num2||'is'||num3);
+ 16  end;
+ 17  /
+Enter value for num1: 4
+old   6: num1:=&num1;
+new   6: num1:=4;
+Enter value for num2: 5
+old   7: num2:=&num2;
+new   7: num2:=5;
+The sum of4and5is9
+The subtraction of4and5is-1
+The multiplication of4and5is20
+The division of4and5is.8
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  x number;
+  3  begin
+  4  x:=&number;
+  5  if mod(x,2)=0 then
+  6  dbms_output.put_line('The number'||x||'is even');
+  7  else
+  8  dbms_output.put_line('The number'||x||'is odd');
+  9  end if;
+ 10  end;
+ 11  /
+Enter value for number: 5
+old   4: x:=&number;
+new   4: x:=5;
+The number5is odd
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  x number;
+  3  y number;
+  4  z number;
+  5  begin
+  6  x:=&number1;
+  7  y:=&number2;
+  8  z:=&number3;
+  9  if x>y and x>z then
+ 10  dbms_output.put_line('x is largest');
+ 11  end if;
+ 12  if y>x and y>z then
+ 13  dbms_output.put_line('y is largest');
+ 14  end if;
+ 15  if z>x and z>y then
+ 16  dbms_output.put_line('z is largest');
+ 17  end if;
+ 18  end;
+ 19  /
+Enter value for number1: 4
+old   6: x:=&number1;
+new   6: x:=4;
+Enter value for number2: 5
+old   7: y:=&number2;
+new   7: y:=5;
+Enter value for number3: 1
+old   8: z:=&number3;
+new   8: z:=1;
+y is largest
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  x number;
+  3  y number;
+  4  z number;
+  5  begin
+  6  x:=&number1;
+  7  y:=&number2;
+  8  z:=&number3;
+  9  if x>y and x>z then
+ 10  dbms_output.put_line('x is largest');
+ 11  elsif y>x and y>z then
+ 12  dbms_output.put_line('y is largest');
+ 13  else
+ 14  dbms_output.put_line('z is largest');
+ 15  end if;
+ 16  end;
+ 17  /
+Enter value for number1: 7
+old   6: x:=&number1;
+new   6: x:=7;
+Enter value for number2: 2
+old   7: y:=&number2;
+new   7: y:=2;
+Enter value for number3: 3
+old   8: z:=&number3;
+new   8: z:=3;
+x is largest
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
