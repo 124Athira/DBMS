@@ -1,0 +1,70 @@
+SQL> set serveroutput on
+SQL> begin
+  2  dbms_output.Put_line('hello');
+  3  end;
+  4  /
+hello
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  var1 varchar(10);
+  3  num1 int(30);
+  4  begin
+  5  var1:='hello';
+  6  num1:=100;
+  7  dbms_output.Put_line('var1:'||var1);
+  8  dbms_output.Put_line('Num1:'||num1);
+  9  end;
+ 10  /
+var1:hello
+Num1:100
+
+PL/SQL procedure successfully completed.
+
+SQL> create or replace procedure greetings
+  2  as
+  3  begin
+  4  dbms_output.Put_line('Hello World!');
+  5  end;
+  6  /
+
+Procedure created.
+
+SQL> execute greetings
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> create table Employees(eid int,fname varchar(30),salary int);
+
+Table created.
+
+SQL> insert into EMployees values(100,'ram',30000);
+
+1 row created.
+
+SQL> insert into Employees values(101,'Sam',4000);
+
+1 row created.
+
+SQL> declare
+  2  name varchar(10);
+  3  sal int(20);
+  4  begin
+  5  select fname,salary into name,sal from Employees where eid=100;
+  6  dbms_output.Put_line('Name:'||name);
+  7  dbms_output.Put_line('Salary:'||sal);
+  8  end;
+  9  /
+Name:ram
+Salary:30000
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+
+
