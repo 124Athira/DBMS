@@ -372,6 +372,23 @@ Minimum of (31,56):31
 
 PL/SQL procedure successfully completed.
 
+SQL> declare
+  2  a number;
+  3  procedure squareNum(x IN OUT number)is
+  4   begin
+  5   x:=x*x;
+  6  end;
+  7  begin
+  8  a:= 21;
+  9  squareNum(a);
+ 10  dbms_output.put_line('Square of (21):'||a);
+ 11  end;
+ 12  /
+Square of (21):441
+
+PL/SQL procedure successfully completed.
+
+
 
 
 
