@@ -266,6 +266,126 @@ x is largest
 
 PL/SQL procedure successfully completed.
 
+SQL> set serveroutput on
+SQL>
+SQL> CREATE OR REPLACE PROCEDURE greetings
+  2
+  3  AS
+  4
+  5  BEGIN
+  6
+  7  dbms_output.put_line('Hello World!');
+  8
+  9  END;
+ 10
+ 11  /
+
+Procedure created.
+
+SQL> execute greetings
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> execute greetings
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> create or replace procedure test1 is
+  2  begin
+  3  dbms_output.put_line('Test Success');
+  4  end;
+  5  /
+
+Procedure created.
+SQL> execute test1;
+Test Success
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE PROCEDURE addemp
+  2  (depid IN dept.eid%TYPE,
+  3
+  4  depname IN dept.ename%TYPE,
+  5
+  6  depsal IN dept.psal%TYPE,
+  7
+  8  deploc IN dept.ploc%TYPE)
+  9
+ 10  IS
+ 11
+ 12  BEGIN
+ 13
+ 14  INSERT INTO dept Values(depid,depname,depsal,deploc);
+ 15
+ 16  dbms_output.Put_line('dpmt added');
+ 17
+ 18  end;
+ 19
+ 20  /
+
+Procedure created.
+
+SQL> execute addemp(2,'Miya',3000,'kerala');
+dpmt added
+
+PL/SQL procedure successfully completed.
+
+SQL> execute addemp(5,'Arun',4000,'kerala');
+dpmt added
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2  greetings;
+  3  end;
+  4  /
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> drop procedure greetings;
+
+Procedure dropped.
+
+SQL> declare
+  2  a number;
+  3  b number;
+  4  c number;
+  5  procedure findMin(x in number,y in number,z out number)is
+  6  begin
+  7  if x<y then
+  8  z:=x;
+  9  else
+ 10  z:=y;
+ 11  end if;
+ 12  end;
+ 13  begin
+ 14  a:=31;
+ 15  b:=56;
+ 16  findMin(a,b,c);
+ 17  dbms_output.put_line('Minimum of (31,56:'||c);
+ 18  end;
+ 19  /
+Minimum of (31,56:31
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
