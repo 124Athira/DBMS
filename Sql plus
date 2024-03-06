@@ -365,10 +365,10 @@ SQL> declare
  14  a:=31;
  15  b:=56;
  16  findMin(a,b,c);
- 17  dbms_output.put_line('Minimum of (31,56:'||c);
+ 17  dbms_output.put_line('Minimum of (31,56):'||c);
  18  end;
  19  /
-Minimum of (31,56:31
+Minimum of (31,56):31
 
 PL/SQL procedure successfully completed.
 
