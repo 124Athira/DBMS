@@ -7,20 +7,16 @@ Query OK, 0 rows affected (0.02 sec)
 mysql> create table Dept1(deptno int primary key,dname varchar(255),loc varchar(255));
 Query OK, 0 rows affected (0.01 sec)
 
-mysql> insert into Emp1 values(101,'Ajith','Manager',null,'1990-05
--15',50000,null,1);
+mysql> insert into Emp1 values(101,'Ajith','Manager',null,'1990-05-15',50000,null,1);
 Query OK, 1 row affected (0.01 sec)
 
-mysql> insert into Emp1 values(102,'Shreya','Developer',101,'2001-
-02-20',60000,null,2);
+mysql> insert into Emp1 values(102,'Shreya','Developer',101,'2001-02-20',60000,null,2);
 Query OK, 1 row affected (0.01 sec)
 
-mysql> insert into Emp1 values(103,'Kavitha','Salesperson',101,'20
-15-08-10',45000,2000,3);
+mysql> insert into Emp1 values(103,'Kavitha','Salesperson',101,'2015-08-10',45000,2000,3);
 Query OK, 1 row affected (0.01 sec)
 
-mysql> insert into Emp1 values(104,'Mithun','Analyst',102,'2018-10
--30',70000,null,2);
+mysql> insert into Emp1 values(104,'Mithun','Analyst',102,'2018-10-30',70000,null,2);
 Query OK, 1 row affected (0.01 sec)
 
 mysql> insert into Dept1 values(1,'HR','Mumbai');
@@ -82,8 +78,7 @@ mysql> select *from Dept1;
 +--------+---------+------------+
 4 rows in set (0.00 sec)
 
-mysql> update Emp1 set sal=sal*1.15 where hiredate<curdate()-inter
-val 10 year;
+mysql> update Emp1 set sal=sal*1.15 where hiredate<curdate()-interval 10 year;
 Query OK, 2 rows affected (0.01 sec)
 Rows matched: 2  Changed: 2  Warnings: 0
 
@@ -112,8 +107,7 @@ mysql> select *from Emp1;
 +-------+---------+-------------+------+------------+-------+------+--------+
 3 rows in set (0.00 sec)
 
-mysql> select mgr,count(*)as num_employees from Emp1 group by mgr
-order by num_employees desc limit 1;
+mysql> select mgr,count(*)as num_employees from Emp1 group by mgr order by num_employees desc limit 1;
 +------+---------------+
 | mgr  | num_employees |
 +------+---------------+
