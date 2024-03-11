@@ -1,3 +1,4 @@
+PROGRAM 1:
 SQL> set serveroutput on
 SQL> begin
   2  dbms_output.Put_line('hello');
@@ -7,6 +8,7 @@ hello
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 2:
 SQL> declare
   2  var1 varchar(10);
   3  num1 int(30);
@@ -22,6 +24,7 @@ Num1:100
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 3:
 SQL> create or replace procedure greetings
   2  as
   3  begin
@@ -36,6 +39,7 @@ Hello World!
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 4:
 SQL> create table Employees(eid int,fname varchar(30),salary int);
 
 Table created.
@@ -48,6 +52,7 @@ SQL> insert into Employees values(101,'Sam',4000);
 
 1 row created.
 
+PROGRAM 5:
 SQL> declare
   2  name varchar(10);
   3  sal int(20);
@@ -62,6 +67,7 @@ Salary:30000
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 6:
 SQL> set serveroutput on;
 SQL> declare
   2  n number;
@@ -83,6 +89,7 @@ factorial=120
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 7:
 SQL> declare
   2  x number(5);
   3  y number(5);
@@ -98,6 +105,7 @@ Sum is30
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 8:
 SQL> declare
   2  var1 integer;
   3  var2 integer;
@@ -119,6 +127,7 @@ new   7: var2:=6;
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 9:
 SQL> begin
   2  dbms_output.put_line('This is my first PL/SQL Program');
   3  dbms_output.put_line('PL/SQL is a procedural language');
@@ -131,6 +140,7 @@ I like PL/SQL
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 10:
 SQL> declare
   2  num1 number;
   3  num2 number;
@@ -155,7 +165,7 @@ The division of20and15is1.33333333333333333333333333333333333333
 
 PL/SQL procedure successfully completed.
 
-
+PROGRAM 11:
 SQL> declare
   2  num1 number;
   3  num2 number;
@@ -186,6 +196,7 @@ The division of4and5is.8
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 12:
 SQL> declare
   2  x number;
   3  begin
@@ -204,6 +215,7 @@ The number5is odd
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 13:
 SQL> declare
   2  x number;
   3  y number;
@@ -236,6 +248,7 @@ y is largest
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 14:
 SQL> declare
   2  x number;
   3  y number;
@@ -266,6 +279,7 @@ x is largest
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 15:
 SQL> set serveroutput on
 SQL>
 SQL> CREATE OR REPLACE PROCEDURE greetings
@@ -292,6 +306,7 @@ Hello World!
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 16:
 SQL> create or replace procedure test1 is
   2  begin
   3  dbms_output.put_line('Test Success');
@@ -304,6 +319,7 @@ Test Success
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 17:
 SQL> CREATE OR REPLACE PROCEDURE addemp
   2  (depid IN dept.eid%TYPE,
   3
@@ -337,6 +353,7 @@ dpmt added
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 18:
 SQL> begin
   2  greetings;
   3  end;
@@ -345,10 +362,12 @@ Hello World!
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 19:
 SQL> drop procedure greetings;
 
 Procedure dropped.
 
+PROGRAM 20:
 SQL> declare
   2  a number;
   3  b number;
@@ -372,6 +391,7 @@ Minimum of (31,56):31
 
 PL/SQL procedure successfully completed.
 
+PROGRAM 21:
 SQL> declare
   2  a number;
   3  procedure squareNum(x IN OUT number)is
