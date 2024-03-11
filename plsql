@@ -125,4 +125,64 @@ PL/SQL procedure successfully completed.
 
 PROGRAM 5:
 
+SQL> create table cstms(id int,name varchar(20),salary int);
+
+Table created.
+SQL> insert into cstms values(1,'sam',2000);
+
+1 row created.
+
+SQL> insert into cstms values(2,'manu',2000);
+
+1 row created.
+
+SQL> insert into cstms values(3,'sonu',3000);
+
+1 row created.
+
+SQL> insert into cstms values(4,'raj',3500);
+
+1 row created.
+
+SQL> insert into cstms values(5,'raju',4000);
+
+1 row created.
+
+SQL> select *from cstms;
+
+        ID NAME                     SALARY
+---------- -------------------- ----------
+         1 sam                        2000
+         2 manu                       2000
+         3 sonu                       3000
+         4 raj                        3500
+         5 raju                       4000
+
+SQL> declare
+  2  c_id cstms.id%type;
+  3  c_name cstms.name%type;
+  4  c_salary cstms.salary%type;
+  5  cursor c_cstms is
+  6  select id,name,salary from cstms;
+  7  begin
+  8  open c_cstms;
+  9  loop
+ 10  fetch c_cstms into c_id,c_name,c_salary;
+ 11  exit when c_cstms%notfound;
+ 12  dbms_output.put_line(c_id||' '||c_name||' '||c_salary);
+ 13  end loop;
+ 14  close c_cstms;
+ 15  end;
+ 16  /
+ 
+1 sam 2000
+2 manu 2000
+3 sonu 3000
+4 raj 3500
+5 raju 4000
+
+PL/SQL procedure successfully completed.
+
+
+
 
