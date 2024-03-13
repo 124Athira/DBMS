@@ -268,3 +268,102 @@ Salary difference:5000
 
 PL/SQL procedure successfully completed.
 
+PROGRAM:
+SQL> create table employee(employee_no int primary key,name varchar(10),salary int);
+
+Table created.
+
+SQL> insert into employee values(1,'Akhil',40000);
+
+1 row created.
+
+SQL> insert into employee values(2,'Zoya',50000);
+
+1 row created.
+
+SQL> insert into employee values(3,'Nanditha',60000);
+
+1 row created.
+
+SQL> insert into employee values(4,'Archana',70000);
+
+1 row created.
+
+SQL> set serveroutput on
+SQL> create or replace trigger Checksalary
+  2  before
+  3  insert or update on employee
+  4  for each row
+  5  begin
+  6  if:new.salary>3000 then
+  7  raise_application_error(-20001,'salary should not be greater than 2000');
+  8  end if;
+  9  end;
+ 10  /
+
+Trigger created.
+
+SQL> update employee set salary=4000 where employee_no=2;
+update employee set salary=4000 where employee_no=2
+       *
+ERROR at line 1:
+ORA-20001: salary should not be greater than 2000
+ORA-06512: at "SYSTEM.CHECKSALARY", line 3
+ORA-04088: error during execution of trigger 'SYSTEM.CHECKSALARY'
+
+
+SQL> update employee set salary=2600 where employee_no=2;
+
+1 row updated.
+
+SQL> select * from employee;
+
+EMPLOYEE_NO NAME           SALARY
+----------- ---------- ----------
+          1 Akhil           40000
+          2 Zoya             2600
+          3 Nanditha        60000
+          4 Archana         70000
+
+PROGRAM:
+SQL>  create table stud(sid int,sname varchar(20),sdpmt varchar(20),marks int);
+
+Table created.
+
+SQL> insert into stud values(1,'sam','cse',20);
+
+1 row created.
+
+SQL>  insert into stud values(2,'tam','it',30);
+
+1 row created.
+
+SQL>  select * from stud;
+
+       SID SNAME                SDPMT                     MARKS
+---------- -------------------- -------------------- ----------
+         1 sam                  cse                          20
+         2 tam                  it                           30
+
+SQL>  create or replace trigger studtrig after insert on stud
+  2  begin
+  3  dbms_output.put_line('inserted');
+  4  end;
+  5  /
+
+Trigger created.
+
+SQL> insert into stud values(3,'wam','ec',39);
+inserted
+
+1 row created.
+
+SQL> select * from stud;
+
+       SID SNAME                SDPMT                     MARKS
+---------- -------------------- -------------------- ----------
+         1 sam                  cse                          20
+         2 tam                  it                           30
+         3 wam                  ec                           39
+
+
