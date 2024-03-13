@@ -183,6 +183,88 @@ SQL> declare
 
 PL/SQL procedure successfully completed.
 
+PROGRAM:
+SQL> set serveroutput on
+SQL> create table customers(id int,name varchar(20),dpmt varchar(20),salary int);
 
+Table created.
 
+SQL> insert into customers values(1,'sam','cs',2000);
+
+1 row created.
+
+SQL> insert into customers values(2,'tam','it',3000);
+
+1 row created.
+
+SQL> insert into customers values(3,'ram','ec',2500);
+
+1 row created.
+
+SQL> insert into customers values(4,'kam','mca',5000);
+
+1 row created.
+
+SQL> declare
+  2  total_rows number(2);
+  3  begin
+  4  update customers
+  5  set salary=salary+5000;
+  6  if sql%notfound then
+  7  dbms_output.put_line('no customers updated');
+  8  elsif sql%found then
+  9  total_rows:=sql%rowcount;
+ 10  dbms_output.put_line(total_rows||'customers update');
+ 11  end if;
+ 12  end;
+ 13  /
+4customers update
+
+PL/SQL procedure successfully completed.
+
+PROGRAM:
+SQL> create or replace trigger salaryupdate
+  2  before delete or insert or update on customers
+  3  for each row
+  4  when(new.id>0)
+  5  declare
+  6  sal_diff number;
+  7  begin
+  8  sal_diff:=:new.salary-:old.salary;
+  9  dbms_output.put_line('Old salary:'||:old.salary);
+ 10  dbms_output.put_line('New salary:'||:new.salary);
+ 11  dbms_output.put_line('Salary difference:'|| sal_diff);
+ 12  end;
+ 13  /
+
+Trigger created.
+
+SQL> declare
+  2  total_rows number(2);
+  3  begin
+  4  update customers
+  5  set salary=salary+5000;
+  6  if sql%notfound then
+  7  dbms_output.put_line('no customers updated');
+  8  elsif sql%found then
+  9  total_rows:=sql%rowcount;
+ 10  dbms_output.put_line(total_rows||' customers updated');
+ 11  end if;
+ 12  end;
+ 13  /
+Old salary:7000
+New salary:12000
+Salary difference:5000
+Old salary:8000
+New salary:13000
+Salary difference:5000
+Old salary:7500
+New salary:12500
+Salary difference:5000
+Old salary:10000
+New salary:15000
+Salary difference:5000
+4 customers updated
+
+PL/SQL procedure successfully completed.
 
