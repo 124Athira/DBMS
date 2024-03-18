@@ -1,0 +1,185 @@
+Microsoft Windows [Version 10.0.19045.4170]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\mlm>mongosh
+Current Mongosh Log ID: 65f80ee9d76a0fe2e48bf201
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.0
+Using MongoDB:          7.0.6
+Using Mongosh:          2.2.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-03-17T23:57:50.107-07:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin        40.00 KiB
+config      108.00 KiB
+dbms         40.00 KiB
+local        40.00 KiB
+university   80.00 KiB
+test> use university
+switched to db university
+university> show dbs
+admin        40.00 KiB
+config      108.00 KiB
+dbms         40.00 KiB
+local        40.00 KiB
+university   80.00 KiB
+university> db.createCollection("emp")
+{ ok: 1 }
+university> db.dbms.insertOne({"id":1,"name":"athira","e_dept":"mca","salary":25000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80fead76a0fe2e48bf202')
+}
+university> db.dbms.insertOne({"id":2,"name":"anjana","e_dept":"bca","salary":20000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81005d76a0fe2e48bf203')
+}
+university> db.dbms.insertOne({"id":3,"name":"krishnendu","e_dept":"mtech","salary":30000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81022d76a0fe2e48bf204')
+}
+university> db.dbms.insertOne({"id":4,"name":"megha","e_dept":"mtech","salary":30000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81033d76a0fe2e48bf205')
+}
+university> db.dbms.insertOne({"id":5,"name":"suhana","e_dept":"mca","salary":35000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81048d76a0fe2e48bf206')
+university>
+university> db.dbms.find().pretty()
+[
+  {
+    _id: ObjectId('65f80fead76a0fe2e48bf202'),
+    id: 1,
+    name: 'athira',
+    e_dept: 'mca',
+    salary: 25000
+  },
+  {
+    _id: ObjectId('65f81005d76a0fe2e48bf203'),
+    id: 2,
+    name: 'anjana',
+    e_dept: 'bca',
+    salary: 20000
+  },
+  {
+    _id: ObjectId('65f81022d76a0fe2e48bf204'),
+    id: 3,
+    name: 'krishnendu',
+    e_dept: 'mtech',
+    salary: 30000
+  },
+  {
+    _id: ObjectId('65f81033d76a0fe2e48bf205'),
+    id: 4,
+    name: 'megha',
+    e_dept: 'mtech',
+    salary: 30000
+  },
+  {
+    _id: ObjectId('65f81048d76a0fe2e48bf206'),
+    id: 5,
+    name: 'suhana',
+    e_dept: 'mca',
+    salary: 35000
+  }
+]
+university> db.createCollection("dept")
+{ ok: 1 }
+university> db.dbms.insertOne({"dept_id":1,"d_name":"mca"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81161d76a0fe2e48bf207')
+}
+university> db.dbms.insertOne({"dept_id":2,"d_name":"bca"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81173d76a0fe2e48bf208')
+}
+university> db.dbms.insertOne({"dept_id":3,"d_name":"mtech"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f81180d76a0fe2e48bf209')
+}
+university> db.dbms.find().pretty()
+[
+  {
+    _id: ObjectId('65f80fead76a0fe2e48bf202'),
+    id: 1,
+    name: 'athira',
+    e_dept: 'mca',
+    salary: 25000
+  },
+  {
+    _id: ObjectId('65f81005d76a0fe2e48bf203'),
+    id: 2,
+    name: 'anjana',
+    e_dept: 'bca',
+    salary: 20000
+  },
+  {
+    _id: ObjectId('65f81022d76a0fe2e48bf204'),
+    id: 3,
+    name: 'krishnendu',
+    e_dept: 'mtech',
+    salary: 30000
+  },
+  {
+    _id: ObjectId('65f81033d76a0fe2e48bf205'),
+    id: 4,
+    name: 'megha',
+    e_dept: 'mtech',
+    salary: 30000
+  },
+  {
+    _id: ObjectId('65f81048d76a0fe2e48bf206'),
+    id: 5,
+    name: 'suhana',
+    e_dept: 'mca',
+    salary: 35000
+  },
+  {
+    _id: ObjectId('65f81161d76a0fe2e48bf207'),
+    dept_id: 1,
+    d_name: 'mca'
+  },
+  {
+    _id: ObjectId('65f81173d76a0fe2e48bf208'),
+    dept_id: 2,
+    d_name: 'bca'
+  },
+  {
+    _id: ObjectId('65f81180d76a0fe2e48bf209'),
+    dept_id: 3,
+    d_name: 'mtech'
+  }
+]
+university> db.dept.drop()
+true
+university> show collections
+dbms
+department
+emp
+employee
+university>
+
+college>
+switched to db college
+college> show dbs
+admin        40.00 KiB
+config      108.00 KiB
+dbms         40.00 KiB
+local        40.00 KiB
+university  160.00 KiB
+college> db.dropDatabase()
+{ ok: 1, dropped: 'college' }
+college>
