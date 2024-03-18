@@ -1,0 +1,227 @@
+Microsoft Windows [Version 10.0.19045.4170]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\mlm>mongosh
+Current Mongosh Log ID: 65f7fb241503df3fc18bf201
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.0
+Using MongoDB:          7.0.6
+Using Mongosh:          2.2.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-03-17T23:57:50.107-07:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   40.00 KiB
+test> use student
+switched to db student
+student> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   40.00 KiB
+student> db.createCollection("dbms")
+{ ok: 1 }
+student> show dbs
+admin    40.00 KiB
+config   72.00 KiB
+local    40.00 KiB
+student   8.00 KiB
+student> db.dbms.insertOne({"rollno":1,"name":"ram"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f7fbc61503df3fc18bf202')
+}
+student> show collections
+dbms
+student> db.dbms.find().pretty()
+[
+  { _id: ObjectId('65f7fbc61503df3fc18bf202'), rollno: 1, name: 'ram' }
+]
+student> db.dbms.updateOne({rollno:1},{$set:{name:"sam"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+student> db.dbms.drop()
+true
+student> show collections
+
+student> db.dropDatabase
+[Function: dropDatabase] AsyncFunction {
+  apiVersions: [ 1, Infinity ],
+  returnsPromise: true,
+  serverVersions: [ '0.0.0', '999.999.999' ],
+  topologies: [ 'ReplSet', 'Sharded', 'LoadBalanced', 'Standalone' ],
+  returnType: { type: 'unknown', attributes: {} },
+  deprecated: false,
+  platforms: [ 'Compass', 'Browser', 'CLI' ],
+  isDirectShellCommand: false,
+  acceptsRawInput: false,
+  shellCommandCompleter: undefined,
+  help: [Function (anonymous)] Help
+}
+student> db.dropDatabase()
+{ ok: 1, dropped: 'student' }
+student> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   40.00 KiB
+student> use admin
+switched to db admin
+admin> use school
+switched to db school
+school> use univ
+switched to db univ
+univ> db.dropDatabase()
+{ ok: 1, dropped: 'univ' }
+univ> use school
+switched to db school
+school> db.dropDatabase()
+{ ok: 1, dropped: 'school' }
+school> use dbms
+switched to db dbms
+dbms> db
+dbms
+dbms> db.createCollection("marklist")
+{ ok: 1 }
+dbms> show collections
+marklist
+dbms> db.createCollection("parentdetails")
+{ ok: 1 }
+dbms> show collections
+marklist
+parentdetails
+dbms> db
+dbms
+dbms> db.marklist.drop()
+true
+dbms> show collections
+parentdetails
+dbms> db.parentdetails.drop()
+true
+dbms> show collections
+
+dbms> db.marklist.insert(
+... {
+... sname:"ram"
+... sname:"ram",
+Uncaught:
+SyntaxError: Unexpected token, expected "," (4:0)
+
+  2 | {
+  3 | sname:"ram"
+> 4 | sname:"ram",
+    | ^
+  5 |
+
+dbms> db.marklist.insert(
+... {
+... sname:"ram",
+... saddr:"kottayam",
+... marks:"40,"
+... grade:"A"
+Uncaught:
+SyntaxError: Unexpected token, expected "," (6:0)
+
+  4 | saddr:"kottayam",
+  5 | marks:"40,"
+> 6 | grade:"A"
+    | ^
+  7 |
+
+dbms> db.marklist.insert(
+... {
+... db.marklist.insert( { sname:"ram", saddr:"kottayam", marks:"40," grade:"A"})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (3:2)
+
+  1 | db.marklist.insert(
+  2 | {
+> 3 | db.marklist.insert( { sname:"ram", saddr:"kottayam", marks:"40," grade:"A"})
+    |   ^
+  4 |
+
+dbms> db.marklist.insert({ sname:"ram", saddr:"kottayam", marks:"40," grade:"A"})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:64)
+
+> 1 | db.marklist.insert({ sname:"ram", saddr:"kottayam", marks:"40," grade:"A"})
+    |                                                                 ^
+  2 |
+
+dbms> db.marklist.insert({ sname:"ram", saddr:"kottayam", marks:"40", grade:"A"})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('65f7ffee1503df3fc18bf203') }
+}
+dbms> db.marklist.find()
+[
+  {
+    _id: ObjectId('65f7ffee1503df3fc18bf203'),
+    sname: 'ram',
+    saddr: 'kottayam',
+    marks: '40',
+    grade: 'A'
+  }
+]
+dbms> db.marklist.find().pretty()
+[
+  {
+    _id: ObjectId('65f7ffee1503df3fc18bf203'),
+    sname: 'ram',
+    saddr: 'kottayam',
+    marks: '40',
+    grade: 'A'
+  }
+]
+dbms> db.marklist.find().pretty()
+[
+  {
+    _id: ObjectId('65f7ffee1503df3fc18bf203'),
+    sname: 'ram',
+    saddr: 'kottayam',
+    marks: '40',
+    grade: 'A'
+  }
+]
+dbms> db.marklist.find().pretty()
+[
+  {
+    _id: ObjectId('65f7ffee1503df3fc18bf203'),
+    sname: 'ram',
+    saddr: 'kottayam',
+    marks: '40',
+    grade: 'A'
+  }
+]
+dbms> db.marklist.find().pretty()[{
+... _id:'344',
+... sname:'sam',
+... saddr:'kollam',
+... marks:30,
+... grade:'B'
+... },
+... {
+... _id:'322',
+... sname:'jose',
+... saddr:'palakkad',
+... marks:20,
+... grade:'c'
+... },
+... {
+... _id:'567',
+... sname:'sera',
+... saddr:'kozhikode',
+... marks:50,
+... grade:'A'
+... }
+... ]
