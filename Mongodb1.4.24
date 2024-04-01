@@ -814,3 +814,254 @@ stud> db.details.find({cgpa:{$gt:7}});
     cgpa: 9
   }
 ]
+stud> db.details.find({sname:/^j/});
+[
+  {
+    _id: ObjectId('660a7b03c8f6a0b2818bf209'),
+    roll: 8,
+    sname: 'jony',
+    dpmt: 'cse',
+    sem: 3,
+    cgpa: 6
+  }
+]
+stud> db.details.find({dpmt:'eee',cgpa:9},{sname:1});
+[ { _id: ObjectId('660a7b1fc8f6a0b2818bf20b'), sname: 'sradha' } ]
+stud> db.details.find({dpmt:"cse"}).sort({cgpa:-1}).limit(1)
+[
+  {
+    _id: ObjectId('660a7ae2c8f6a0b2818bf207'),
+    roll: 6,
+    sname: 'rony',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 8
+  }
+]
+stud> db.details.find({dpmt:"cse"}).sort({cgpa:-1}).limit(1)
+[
+  {
+    _id: ObjectId('660a7ae2c8f6a0b2818bf207'),
+    roll: 6,
+    sname: 'rony',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 8
+  }
+]
+stud> db.details.find({dpmt:"cse"}).sort({cgpa:1})
+[
+  {
+    _id: ObjectId('660a7b03c8f6a0b2818bf209'),
+    roll: 8,
+    sname: 'jony',
+    dpmt: 'cse',
+    sem: 3,
+    cgpa: 6
+  },
+  {
+    _id: ObjectId('660a7a9ac8f6a0b2818bf202'),
+    roll: 1,
+    sname: 'ram',
+    dpmt: 'cse',
+    sem: 2,
+    cgpa: 7
+  },
+  {
+    _id: ObjectId('660a7af6c8f6a0b2818bf208'),
+    roll: 7,
+    sname: 'ajay',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 7
+  },
+  {
+    _id: ObjectId('660a7ae2c8f6a0b2818bf207'),
+    roll: 6,
+    sname: 'rony',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 8
+  }
+]
+stud> db.details.find({dpmt:"cse"}).sort({cgpa:-1})
+[
+  {
+    _id: ObjectId('660a7ae2c8f6a0b2818bf207'),
+    roll: 6,
+    sname: 'rony',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 8
+  },
+  {
+    _id: ObjectId('660a7a9ac8f6a0b2818bf202'),
+    roll: 1,
+    sname: 'ram',
+    dpmt: 'cse',
+    sem: 2,
+    cgpa: 7
+  },
+  {
+    _id: ObjectId('660a7af6c8f6a0b2818bf208'),
+    roll: 7,
+    sname: 'ajay',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 7
+  },
+  {
+    _id: ObjectId('660a7b03c8f6a0b2818bf209'),
+    roll: 8,
+    sname: 'jony',
+    dpmt: 'cse',
+    sem: 3,
+    cgpa: 6
+  }
+]
+stud> db.details.find({dpmt:"cse"}).sort({cgpa:1}).limit(1)
+[
+  {
+    _id: ObjectId('660a7b03c8f6a0b2818bf209'),
+    roll: 8,
+    sname: 'jony',
+    dpmt: 'cse',
+    sem: 3,
+    cgpa: 6
+  }
+]
+stud> db.details.find({dpmt:'eee'},{sname:1}).sort({cgpa:-1}).limit(3)
+[
+  { _id: ObjectId('660a7b1fc8f6a0b2818bf20b'), sname: 'sradha' },
+  { _id: ObjectId('660a7ad3c8f6a0b2818bf206'), sname: 'rani' },
+  { _id: ObjectId('660a7b13c8f6a0b2818bf20a'), sname: 'sony' }
+]
+stud> db.details.find({dpmt:'cse',cgpa:{$gt:6}},{sname:1,sem:1})
+[
+  { _id: ObjectId('660a7a9ac8f6a0b2818bf202'), sname: 'ram', sem: 2 },
+  { _id: ObjectId('660a7ae2c8f6a0b2818bf207'), sname: 'rony', sem: 4 },
+  { _id: ObjectId('660a7af6c8f6a0b2818bf208'), sname: 'ajay', sem: 4 }
+]
+stud> db.details.find({dpmt:'cse',cgpa:{$gt:6}},{sname:1,sem:1}).limit(1)
+[ { _id: ObjectId('660a7a9ac8f6a0b2818bf202'), sname: 'ram', sem: 2 } ]
+stud> db.details.find({cgpa:{$gt:6,$lt:9}})
+[
+  {
+    _id: ObjectId('660a7a9ac8f6a0b2818bf202'),
+    roll: 1,
+    sname: 'ram',
+    dpmt: 'cse',
+    sem: 2,
+    cgpa: 7
+  },
+  {
+    _id: ObjectId('660a7ad3c8f6a0b2818bf206'),
+    roll: 5,
+    sname: 'rani',
+    dpmt: 'eee',
+    sem: 5,
+    cgpa: 8
+  },
+  {
+    _id: ObjectId('660a7ae2c8f6a0b2818bf207'),
+    roll: 6,
+    sname: 'rony',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 8
+  },
+  {
+    _id: ObjectId('660a7af6c8f6a0b2818bf208'),
+    roll: 7,
+    sname: 'ajay',
+    dpmt: 'cse',
+    sem: 4,
+    cgpa: 7
+  }
+]
+stud> db.details.find({dpmt:'eee'})
+[
+  {
+    _id: ObjectId('660a7ad3c8f6a0b2818bf206'),
+    roll: 5,
+    sname: 'rani',
+    dpmt: 'eee',
+    sem: 5,
+    cgpa: 8
+  },
+  {
+    _id: ObjectId('660a7b13c8f6a0b2818bf20a'),
+    roll: 9,
+    sname: 'sony',
+    dpmt: 'eee',
+    sem: 3,
+    cgpa: 6
+  },
+  {
+    _id: ObjectId('660a7b1fc8f6a0b2818bf20b'),
+    roll: 10,
+    sname: 'sradha',
+    dpmt: 'eee',
+    sem: 7,
+    cgpa: 9
+  }
+]
+stud> db.details.find({dpmt:{$nin:['cse','ece','eee']}})
+[
+  {
+    _id: ObjectId('660a7aaac8f6a0b2818bf203'),
+    roll: 2,
+    sname: 'sam',
+    dpmt: 'it',
+    sem: 3,
+    cgpa: 5
+  },
+  {
+    _id: ObjectId('660a7ab8c8f6a0b2818bf204'),
+    roll: 3,
+    sname: 'dane',
+    dpmt: 'ai',
+    sem: 6,
+    cgpa: 6
+  }
+]
+stud> db.details.find({$and:[{sem:3},{dpmt:{$in:['cse','ece','eee']}}]})
+[
+  {
+    _id: ObjectId('660a7b03c8f6a0b2818bf209'),
+    roll: 8,
+    sname: 'jony',
+    dpmt: 'cse',
+    sem: 3,
+    cgpa: 6
+  },
+  {
+    _id: ObjectId('660a7b13c8f6a0b2818bf20a'),
+    roll: 9,
+    sname: 'sony',
+    dpmt: 'eee',
+    sem: 3,
+    cgpa: 6
+  }
+]
+stud> db.details.updateOne({sname:'ram'},{$set:{sem:4}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+stud> db.details.updateMany({dpmt:'eee'},{$set:{sem:2}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+stud>
+{ acknowledged: true, deletedCount: 1 }
+stud> db.details.deleteMany({cgpa:{$gt:8}})
+{ acknowledged: true, deletedCount: 1 }
+stud>
