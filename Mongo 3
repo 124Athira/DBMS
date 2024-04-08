@@ -1,0 +1,23 @@
+1.Create database named college,collection named s2mca
+
+test> use college
+switched to db college
+college> db.createCollection("student")
+{ ok: 1 }
+college> db.s2mca.insertOne({roll:1,name:'anjana',age:20,div:'A',sub:['phy','che']})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613a8908ea2c14d138bf203')
+}
+college> db.s2mca.insertOne({roll:2,name:'krishnendu',age:21,div:'B',sub:['phy','mat']})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613a8b58ea2c14d138bf204')
+}
+college> db.s2mca.insertOne({roll:3,name:'abitha',age:21,div:'C',sub:['phy','eng']})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613a8d38ea2c14d138bf205')
+}
+college> db.s2mca.aggregate([{$match:{div:'A'}},{$count:'total student in A'}]);
+[ { 'total student in A': 3 } ]
