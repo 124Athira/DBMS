@@ -1,0 +1,99 @@
+mca> use univ
+switched to db univ
+univ> db.createCollection("s1mca")
+{ ok: 1 }
+univ> db.s1mca.insertOne({name:"Alice",gender:"female",department:"CS",marks:85})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613bb806de8dbc6768bf209')
+}
+univ> db.s1mca.insertOne({name:"Deepak",gender:"male",department:"CS",marks:78})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613bbb86de8dbc6768bf20a')
+}
+univ> db.s1mca.insertOne({name:"Keerthana",gender:"female",department:"Maths",marks:92})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613bbe16de8dbc6768bf20b')
+}
+univ> db.s1mca.insertOne({name:"Zain",gender:"male",department:"Maths",marks:80})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613bc026de8dbc6768bf20c')
+}
+univ> db.s1mca.insertOne({name:"Adithi",gender:"female",department:"Physics",marks:88})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613bc326de8dbc6768bf20d')
+}
+univ> db.s1mca.insertOne({name:"Sinan",gender:"male",department:"Physics",marks:75})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6613bc4e6de8dbc6768bf20e')
+}
+univ> db.s1mca.find({gender:"female"})
+[
+  {
+    _id: ObjectId('6613bb806de8dbc6768bf209'),
+    name: 'Alice',
+    gender: 'female',
+    department: 'CS',
+    marks: 85
+  },
+  {
+    _id: ObjectId('6613bbe16de8dbc6768bf20b'),
+    name: 'Keerthana',
+    gender: 'female',
+    department: 'Maths',
+    marks: 92
+  },
+  {
+    _id: ObjectId('6613bc326de8dbc6768bf20d'),
+    name: 'Adithi',
+    gender: 'female',
+    department: 'Physics',
+    marks: 88
+  }
+]
+univ> db.s1mca.find({gender:"male"})
+[
+  {
+    _id: ObjectId('6613bbb86de8dbc6768bf20a'),
+    name: 'Deepak',
+    gender: 'male',
+    department: 'CS',
+    marks: 78
+  },
+  {
+    _id: ObjectId('6613bc026de8dbc6768bf20c'),
+    name: 'Zain',
+    gender: 'male',
+    department: 'Maths',
+    marks: 80
+  },
+  {
+    _id: ObjectId('6613bc4e6de8dbc6768bf20e'),
+    name: 'Sinan',
+    gender: 'male',
+    department: 'Physics',
+    marks: 75
+  }
+]
+univ> db.s1mca.aggregate([{$group:{_id:"$department",total_students:{$sum:1}}}])
+[
+  { _id: 'Maths', total_students: 2 },
+  { _id: 'Physics', total_students: 2 },
+  { _id: 'CS', total_students: 2 }
+]
+univ> db.s1mca.aggregate([{$match:{gender:"male"}},{$group:{_id:"$department",total_male_statements:{$sum:1}}}])
+[
+  { _id: 'CS', total_male_statements: 1 },
+  { _id: 'Physics', total_male_statements: 1 },
+  { _id: 'Maths', total_male_statements: 1 }
+]
+univ> db.s1mca.aggregate([{$group:{_id:"$department",avg_marks:{$avg:"$marks"}}}])
+[
+  { _id: 'CS', avg_marks: 81.5 },
+  { _id: 'Maths', avg_marks: 86 },
+  { _id: 'Physics', avg_marks: 81.5 }
