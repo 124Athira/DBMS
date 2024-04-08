@@ -1,9 +1,12 @@
-1.Create database named college,collection named s2mca
+1.Create database named college,collection named s2mca:-
 
 test> use college
 switched to db college
 college> db.createCollection("student")
 { ok: 1 }
+
+2.Insert data:-
+
 college> db.s2mca.insertOne({roll:1,name:'anjana',age:20,div:'A',sub:['phy','che']})
 {
   acknowledged: true,
@@ -19,5 +22,60 @@ college> db.s2mca.insertOne({roll:3,name:'abitha',age:21,div:'C',sub:['phy','eng
   acknowledged: true,
   insertedId: ObjectId('6613a8d38ea2c14d138bf205')
 }
+
+3. Display total number of students in one section:-
 college> db.s2mca.aggregate([{$match:{div:'A'}},{$count:'total student in A'}]);
 [ { 'total student in A': 3 } ]
+
+4. Displaying the total number of students in both the sections and maximum age from both
+section:-
+
+college> db.s2mca.aggregate([{$group:{_id:'$div',total_st:{$sum:1},max_age:{$max:'$age'}}}])
+[
+  { _id: 'B', total_st: 2, max_age: 21 },
+  { _id: 'A', total_st: 3, max_age: 20 },
+  { _id: 'C', total_st: 2, max_age: 21 }
+]
+
+5. Displaying details of students whose age is greater than 30 using match stage:-
+
+college> db.s2mca.aggregate([{$match:{age:{$gt:20}}}])
+[
+  {
+    _id: ObjectId('6613993c876fa588818bf203'),
+    roll: 2,
+    name: 'sam',
+    age: 21,
+    div: 'B',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('66139958876fa588818bf204'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'C',
+    sub: [ 'phy', 'eng' ]
+  },
+  {
+    _id: ObjectId('6613a8b58ea2c14d138bf204'),
+    roll: 2,
+    name: 'krishnendu',
+    age: 21,
+    div: 'B',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('6613a8d38ea2c14d138bf205'),
+    roll: 3,
+    name: 'abitha',
+    age: 21,
+    div: 'C',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+
+
+
+
+
