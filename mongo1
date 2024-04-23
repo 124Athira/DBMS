@@ -1,0 +1,59 @@
+test> show dbs
+admin        88.00 KiB
+college      96.00 KiB
+config      108.00 KiB
+dbms         40.00 KiB
+local        72.00 KiB
+mca         120.00 KiB
+stud         72.00 KiB
+student      80.00 KiB
+univ         72.00 KiB
+university  160.00 KiB
+test>
+
+test> use students
+switched to db students
+students> db.createCollection("adbms")
+{ ok: 1 }
+students> db.adbms.insertOne({"rollno":1,"name":"avni"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('66277e0f955cb7e9e18bf202')
+}
+students> show collections
+adbms
+students> db.adbms.find().pretty()
+[
+  {
+    _id: ObjectId('66277e0f955cb7e9e18bf202'),
+    rollno: 1,
+    name: 'avni'
+  }
+]
+students> db.adbms.updateOne({rollno:1},{$set:{name:"diya"}})
+{
+stud>
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+students> db.adbms.drop()
+true
+students> show collections
+
+students> db.dropDatabase()
+{ ok: 1, dropped: 'students' }
+students> show dbs
+admin        88.00 KiB
+college      96.00 KiB
+config      108.00 KiB
+dbms         40.00 KiB
+local        72.00 KiB
+mca         120.00 KiB
+stud         72.00 KiB
+student      80.00 KiB
+univ         72.00 KiB
+university  160.00 KiB
+students> db.dropDatabase()
+{ ok: 1, dropped: 'students' }
