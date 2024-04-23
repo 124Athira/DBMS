@@ -1,3 +1,4 @@
+1)
 mca> use univ
 switched to db univ
 univ> db.createCollection("s1mca")
@@ -32,6 +33,7 @@ univ> db.s1mca.insertOne({name:"Sinan",gender:"male",department:"Physics",marks:
   acknowledged: true,
   insertedId: ObjectId('6613bc4e6de8dbc6768bf20e')
 }
+2)
 univ> db.s1mca.find({gender:"female"})
 [
   {
@@ -56,6 +58,7 @@ univ> db.s1mca.find({gender:"female"})
     marks: 88
   }
 ]
+3)
 univ> db.s1mca.find({gender:"male"})
 [
   {
@@ -80,18 +83,21 @@ univ> db.s1mca.find({gender:"male"})
     marks: 75
   }
 ]
+4)
 univ> db.s1mca.aggregate([{$group:{_id:"$department",total_students:{$sum:1}}}])
 [
   { _id: 'Maths', total_students: 2 },
   { _id: 'Physics', total_students: 2 },
   { _id: 'CS', total_students: 2 }
 ]
+5)
 univ> db.s1mca.aggregate([{$match:{gender:"male"}},{$group:{_id:"$department",total_male_statements:{$sum:1}}}])
 [
   { _id: 'CS', total_male_statements: 1 },
   { _id: 'Physics', total_male_statements: 1 },
   { _id: 'Maths', total_male_statements: 1 }
 ]
+6)
 univ> db.s1mca.aggregate([{$group:{_id:"$department",avg_marks:{$avg:"$marks"}}}])
 [
   { _id: 'CS', avg_marks: 81.5 },
