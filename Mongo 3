@@ -1,81 +1,266 @@
-1.Create database named college,collection named s2mca:-
+Microsoft Windows [Version 10.0.22631.3447]
+(c) Microsoft Corporation. All rights reserved.
 
+C:\Users\LENOVO>mongosh
+Current Mongosh Log ID: 662e17f42219e36ce046b798
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5
+Using MongoDB:          7.0.9
+Using Mongosh:          2.2.5
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2024-04-28T14:55:40.180+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin   40.00 KiB
+config  12.00 KiB
+local   72.00 KiB
 test> use college
 switched to db college
-college> db.createCollection("student")
+college> db.createCollection("stud")
 { ok: 1 }
-
-2.Insert data:-
-
-college> db.s2mca.insertOne({roll:1,name:'anjana',age:20,div:'A',sub:['phy','che']})
+college> db.s2mca.insertOne({roll:1,name:'ram',age:20,div:'A',sub:['phy','che']})
 {
   acknowledged: true,
-  insertedId: ObjectId('6613a8908ea2c14d138bf203')
+  insertedId: ObjectId('662e19452219e36ce046b799')
 }
-college> db.s2mca.insertOne({roll:2,name:'krishnendu',age:21,div:'B',sub:['phy','mat']})
+college> db.s2mca.insertOne({roll:2,name:'sam',age:21,div:'b',sub:['phy','mat']})
 {
   acknowledged: true,
-  insertedId: ObjectId('6613a8b58ea2c14d138bf204')
+  insertedId: ObjectId('662e19912219e36ce046b79a')
 }
-college> db.s2mca.insertOne({roll:3,name:'abitha',age:21,div:'C',sub:['phy','eng']})
+college> db.s2mca.insertOne({roll:3,name:'june',age:21,div:'c',sub:['phy','eng']})
 {
   acknowledged: true,
-  insertedId: ObjectId('6613a8d38ea2c14d138bf205')
+  insertedId: ObjectId('662e19a12219e36ce046b79b')
 }
-
-3. Display total number of students in one section:-
-college> db.s2mca.aggregate([{$match:{div:'A'}},{$count:'total student in A'}]);
-[ { 'total student in A': 3 } ]
-
-4. Displaying the total number of students in both the sections and maximum age from both
-section:-
-
-college> db.s2mca.aggregate([{$group:{_id:'$div',total_st:{$sum:1},max_age:{$max:'$age'}}}])
-[
-  { _id: 'B', total_st: 2, max_age: 21 },
-  { _id: 'A', total_st: 3, max_age: 20 },
-  { _id: 'C', total_st: 2, max_age: 21 }
-]
-
-5. Displaying details of students whose age is greater than 30 using match stage:-
-
-college> db.s2mca.aggregate([{$match:{age:{$gt:20}}}])
+college> db.s2mca.find()
 [
   {
-    _id: ObjectId('6613993c876fa588818bf203'),
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  },
+  {
+    _id: ObjectId('662e19912219e36ce046b79a'),
     roll: 2,
     name: 'sam',
     age: 21,
-    div: 'B',
+    div: 'b',
     sub: [ 'phy', 'mat' ]
   },
   {
-    _id: ObjectId('66139958876fa588818bf204'),
+    _id: ObjectId('662e19a12219e36ce046b79b'),
     roll: 3,
     name: 'june',
     age: 21,
-    div: 'C',
-    sub: [ 'phy', 'eng' ]
-  },
-  {
-    _id: ObjectId('6613a8b58ea2c14d138bf204'),
-    roll: 2,
-    name: 'krishnendu',
-    age: 21,
-    div: 'B',
-    sub: [ 'phy', 'mat' ]
-  },
-  {
-    _id: ObjectId('6613a8d38ea2c14d138bf205'),
-    roll: 3,
-    name: 'abitha',
-    age: 21,
-    div: 'C',
+    div: 'c',
     sub: [ 'phy', 'eng' ]
   }
 ]
+college> db.s2mca.aggregate([{$match:{div:'A'}},{$count:'total stud
+ in A'}]);
+[ { 'total stud in A': 1 } ]
+college> db.s2mca.aggregate([{$group:{_id:'$div',total_st:{$sum:1},max_age:{$max:'$age'}}}])
+[
+  { _id: 'b', total_st: 1, max_age: 21 },
+  { _id: 'c', total_st: 1, max_age: 21 },
+  { _id: 'A', total_st: 1, max_age: 20 }
+]
+college> db.s2mca.aggregate([{$match:{age:{$gt:20}}}])
+[
+  {
+    _id: ObjectId('662e19912219e36ce046b79a'),
+    roll: 2,
+    name: 'sam',
+    age: 21,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+college> db.s2mca.aggregate([{'$sort':{'age':1}}])
+[
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  },
+  {
+    _id: ObjectId('662e19912219e36ce046b79a'),
+    roll: 2,
+    name: 'sam',
+    age: 21,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+college> db.s2mca.aggregate([{'$sort':{'age':-1}}])
+[
+  {
+    _id: ObjectId('662e19912219e36ce046b79a'),
+    roll: 2,
+    name: 'sam',
+    age: 21,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  },
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+college> db.s2mca.aggregate([{$match:{div:"A"}},{'$sort':{'age':-1}},{$limit:1}])
+[
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+college> db.s2mca.aggregate([{$unwind:'$sub'}])
+[
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: 'phy'
+  },
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: 'che'
+  },
+  {
+    _id: ObjectId('662e19912219e36ce046b79a'),
+    roll: 2,
+    name: 'sam',
+    age: 21,
+    div: 'b',
+    sub: 'phy'
+  },
+  {
+    _id: ObjectId('662e19912219e36ce046b79a'),
+    roll: 2,
+    name: 'sam',
+    age: 21,
+    div: 'b',
+    sub: 'mat'
+  },
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: 'phy'
+  },
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: 'eng'
+  }
+]
+college> db.s2mca.aggregate([{$group:{_id:'roll',averageAge:{$avg:'$age'}}}]);
+[ { _id: 'roll', averageAge: 20.666666666666668 } ]
+college> db.s2mca.aggregate([{$group:{_id:'$gender',count:{$sum:1}}}]);
+[ { _id: null, count: 3 } ]
+college> db.s2mca.aggregate([{$sort:{credit:-1}},{$limit:1}])
+[
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+college> db.s2mca.find({name:/^j/});
+[
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+college> db.s2mca.find({sub:/che/});
+[
+  {
+    _id: ObjectId('662e19452219e36ce046b799'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+college> db.students.find({ name: /^J/ });
 
+college> db.course.find({ code: /ENG/ });
 
-
-
-
+college> db.s2mca.find({name:/june/i});
+[
+  {
+    _id: ObjectId('662e19a12219e36ce046b79b'),
+    roll: 3,
+    name: 'june',
+    age: 21,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
