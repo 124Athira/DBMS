@@ -1,0 +1,62 @@
+Microsoft Windows [Version 10.0.22631.3447]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\LENOVO>mongosh
+Current Mongosh Log ID: 662e295adbdecb52a046b798
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5
+Using MongoDB:          7.0.9
+Using Mongosh:          2.2.5
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-04-28T14:55:40.180+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use mca
+switched to db mca
+mca> db.createCollection("student")
+{ ok: 1 }
+mca> db.createCollection("course")
+{ ok: 1 }
+mca> db.course.insertMany([
+...   { cid: 1, cname: "Mathematics" },
+...   { cid: 2, cname: "Computer Science" },
+...   { cid: 3, cname: "Physics" },
+... ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('662e29bedbdecb52a046b799'),
+    '1': ObjectId('662e29bedbdecb52a046b79a'),
+    '2': ObjectId('662e29bedbdecb52a046b79b')
+  }
+}
+mca> db.student.insertMany([
+...   { roll: 101, name: "Alice", mark: 85, cid: 1 },
+...   { roll: 102, name: "Bob", mark: 75, cid: 2 },
+...   { roll: 103, name: "Charlie", mark: 90, cid: 1 },
+...   { roll: 104, name: "David", mark: 80, cid: 3 },
+... ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('662e29d4dbdecb52a046b79c'),
+    '1': ObjectId('662e29d4dbdecb52a046b79d'),
+    '2': ObjectId('662e29d4dbdecb52a046b79e'),
+    '3': ObjectId('662e29d4dbdecb52a046b79f')
+  }
+}
+mca> db.students.createIndex({name:1},{name:'student index'})
+student index
+mca> db.students.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'student index' }
+]
+mca> db.students.dropIndex({name:1})
+{ nIndexesWas: 2, ok: 1 }
+mca> db.students.dropIndex('student index')
+MongoshInternalError[IndexNotFound]: index not found with name [student index]
+mca>
